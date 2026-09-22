@@ -1,0 +1,25 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: 7a2c2ab9-1c62-43bd-975f-beecae43d6c8
+  title: KGG375 GIS Project
+
+  toc:
+    - file: index.md
+
+    - title: Patterns of Crime in Greater Sydney
+      children:
+        - file: methods.md
+        - file: results.md
+        - file: discussion.md
+        - file: conclusion.md
+  # description:
+  # keywords: []
+  # authors: []
+  # github:
+  # To autogenerate a Table of Contents, run "jupyter book init --write-toc"
+site:
+  template: book-theme
+  # options:
+  #   favicon: favicon.ico
+  #   logo: site_logo.png
