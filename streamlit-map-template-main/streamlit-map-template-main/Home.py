@@ -16,11 +16,45 @@ st.title("Interactive Map")
  
 # load shapefile 
 # Load shapefile from your GitHub repository
-project_folder = Path(__file__).resolve().parent.parent
 
-# Find the outer project's data folder 
-project_folder = Path(__file__).resolve().parents[2] 
-shapefile_path = ( project_folder / "data" / "SydneyLGAs_GetisOrd.shp" ) 
+from pathlib import Path 
+#Home.py is inside the inner project folder. 
+# # Move up to the outer project folder. 
+project_folder = Path(__file__).resolve().parents[1] 
+data_folder = project_folder / "data" 
+shapefile_path = ( data_folder / "SydneyLGAs_GetisOrd.shp" ) 
+st.write("Project folder:", str(project_folder)) 
+st.write("Data folder exists:", data_folder.exists()) 
+st.write("Shapefile path:", str(shapefile_path)) 
+st.write("Shapefile exists:", shapefile_path.exists()) 
+# Check the shapefile's required component files 
+for extension in [".shp", ".shx", ".dbf", ".prj"]: 
+    component = shapefile_path.with_suffix(extension) 
+    st.write( f"{extension} file exists:", component.exists() ) 
+    
+if not shapefile_path.exists(): 
+        
+    st.error("The shapefile could not be found.") 
+    st.stop() 
+
+try: 
+    lga_shapefile = gpd.read_file(shapefile_path) 
+    lga_shapefile = lga_shapefile.to_crs(epsg=4326) 
+            
+    st.success( f"Loaded {len(lga_shapefile)} LGA polygons." ) 
+           
+except Exception as e: 
+    st.error(f"Shapefile loading failed: {e}") st.stop()
+
+
+
+
+
+# project_folder = Path(__file__).resolve().parent.parent
+
+# # Find the outer project's data folder 
+# project_folder = Path(__file__).resolve().parents[2] 
+# shapefile_path = ( project_folder / "data" / "SydneyLGAs_GetisOrd.shp" ) 
 
 lga_shapefile = gpd.read_file(shapefile_path) 
 
