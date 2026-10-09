@@ -21,8 +21,12 @@ shapefile_path = (
     / "data"
     / "SydneyLGAs_MGA202056_socioecon_crime_2015_2025.shp"
 )
-lga_shapefile = gpd.read_file(shapefile_path / "SydneyLGAs_MGA202056_socioecon_crime_2015_2025.shp")
-lga_shapefile = lga_shapefile.to_crs(epsg=4326)  # Convert to WGS84 for mapping
+
+# Load the shapefile
+lga_shapefile = gpd.read_file(shapefile_path)
+
+# Convert to WGS84 for web mapping
+lga_shapefile = lga_shapefile.to_crs(epsg=4326)
 
 # page title
 st.title("Sydney Crime Explorer Map")
@@ -58,13 +62,13 @@ m.add_basemap("OpenTopoMap")
 for layer in layers: 
     field = layer["field"] 
     
-    if field not in gdf.columns: 
+    if field not in lga_shapefile.columns: 
         st.warning( f"Skipping {layer['name']}: " 
                    f"field '{field}' was not found." ) 
         continue 
     
     # Use a separate GeoDataFrame for each layer 
-    layer_gdf = gdf[ 
+    layer_gdf = lga_shapefile[ 
                     ["LGA_NAME25", field, "geometry"] 
     ].copy() 
     
