@@ -44,7 +44,8 @@ try:
     st.success( f"Loaded {len(lga_shapefile)} LGA polygons." ) 
            
 except Exception as e: 
-    st.error(f"Shapefile loading failed: {e}") st.stop()
+    st.error(f"Shapefile loading failed: {e}") 
+    st.stop()
 
 
 
