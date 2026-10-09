@@ -105,9 +105,9 @@ layers = [
 
 required_fields = [
     "LGA_NAME25",
-    "Drug_Gi_Category", "Drug_Z", "Drug_P",
-    "VC_Gi_Category", "VC_Z", "VC_P",
-    "PO_Gi_Category", "PO_Z", "PO_P",
+    "Drug_Gi_Ca", "Drug_Z", "Drug_P",
+    "VC_Gi_Cate", "VC_Z", "VC_P",
+    "PO_Gi_Cate", "PO_Z", "PO_P",
 ]
 
 missing_fields = [
