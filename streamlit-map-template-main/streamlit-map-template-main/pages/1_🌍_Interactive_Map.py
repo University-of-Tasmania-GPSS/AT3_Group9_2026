@@ -2,8 +2,7 @@
 import streamlit as st
 import leafmap.foliumap as leafmap
 import geopandas as gpd 
-import pathlib as Path
-
+from pathlib import Path
 st.set_page_config(page_title="Sydney Crime Explorer Map", layout="wide")
 
 #side bar
