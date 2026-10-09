@@ -5,6 +5,18 @@ import geopandas as gpd
 from pathlib import Path
 st.set_page_config(page_title="Sydney Crime Explorer Map", layout="wide")
 
+
+# Find the repository files available to Streamlit 
+root = Path("/mount/src/at3_group9_2026") 
+st.write("Searching repository:", str(root)) 
+if root.exists(): 
+    for path in root.rglob("*.shp"): 
+        st.write("Shapefile found:", str(path)) 
+        
+else: st.error("Repository folder not found.")
+
+
+
 #side bar
     
 
