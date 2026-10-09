@@ -1,10 +1,16 @@
 # Results
-
+## Spatial Correlation Results (Molly)
 ### Map 1
 
 ### Map 2
 
 ### Map 3
+
+# Socio Economic Correlation Results (Tara)
+### Graph 1
+### Graph 2
+### Graph 3
+and so on and so forth
 
 I am a book about ... something! Wikipedia has [information about books](wiki:book): hover over the link for more information.
 
