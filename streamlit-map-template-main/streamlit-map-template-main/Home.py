@@ -77,9 +77,9 @@ layers = [
     { "name": "Drug Offences - total count", "field": "Drugs_Tota", "color": "#E3C441", },
     { "name": "Violent Crime - total count", "field": "VC_Total", "color": "#91AD59", },
     { "name": "Property Offences - total count", "field": "PO_Total", "color": "#34734A", },
-    { "name": "Drug Offences — rate per 1,000", "field": "Drugs/1000", "color": "#E3C441", },
-    { "name": "Violent Crime — rate per 1,000", "field": "VC/1000", "color": "#91AD59", },
-    { "name": "Property Offences — rate per 1,000", "field": "PO/1000", "color": "#34734A", },
+    { "name": "Drug Offences - rate per 1,000", "field": "Drugs/1000", "color": "#E3C441", },
+    { "name": "Violent Crime - rate per 1,000", "field": "VC/1000", "color": "#91AD59", },
+    { "name": "Property Offences - rate per 1,000", "field": "PO/1000", "color": "#34734A", },
 ]
 
 # Map header
@@ -230,7 +230,8 @@ st.caption( "Use the layer control on the map to toggle crime " "counts and rate
 
 # Colour legend
 
-st.markdown("#### Crime Count/Rate legend")
+st.markdown("####Legend####")
+st.markdown("#####Crime Count/Rate#####")
 
 legend_columns = st.columns(5)
 
