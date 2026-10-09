@@ -181,14 +181,6 @@ def classify_category(value):
 
 # 6. CREATE MAP
 
-# m = leafmap.Map(
-#     center=(-33.87, 151.21),
-#     zoom=9,
-#     minimap_control=True,
-#     draw_control=False,
-#     measure_control=True,
-# )
-
 m = leafmap.Map(
     center=(-33.87, 151.21),
     zoom=9,
@@ -300,7 +292,7 @@ st.caption(
 
 # 9. LEGEND
 
-st.subheader("Map legend")
+st.subheader("Legend")
 
 legend_items = [
     ("#D73027", "Hotspot", "High crime-rate clustering"),
