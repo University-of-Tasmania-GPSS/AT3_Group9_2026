@@ -60,6 +60,19 @@ m = leafmap.Map(
 m.add_basemap("OpenTopoMap")
 
 
+st.sidebar.subheader("Map appearance")
+
+transparency = st.sidebar.slider(
+    "Polygon opacity",
+    min_value=0,
+    max_value=100,
+    value=40,
+    step=5,
+)
+
+fill_opacity = transparency / 100
+
+
 # add polygon layers 
 for layer in layers: 
     field = layer["field"] 
@@ -87,9 +100,19 @@ for layer in layers:
         
     else: midpoint = (minimum + maximum) / 2 
     
-    def style_function( feature, field=field, color=layer["color"], opacity=fill_opacity ): 
-        return { "fillColor": color, "color": "#465746", "weight": 0.8, "fillOpacity": opacity, "opacity": 0.8, }
-
+    def style_function(
+        feature,
+        field=field,
+        color=layer["color"],
+        opacity=fill_opacity,
+        ):
+        return {
+            "fillColor": color,
+            "color": "#465746",
+            "weight": 0.8,
+            "fillOpacity": opacity,
+            "opacity": 0.8,
+        }
 m.add_gdf( layer_gdf, layer_name=layer["name"], style_function=style_function, info_mode="on_click", )
 
 # Display map 
