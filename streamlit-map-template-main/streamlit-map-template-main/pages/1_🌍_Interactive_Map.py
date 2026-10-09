@@ -1,4 +1,3 @@
-from turtle import color
 
 import streamlit as st
 import leafmap.foliumap as leafmap
