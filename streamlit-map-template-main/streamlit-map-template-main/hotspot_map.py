@@ -85,19 +85,19 @@ except Exception as e:
 layers = [
     {
         "name": "Drug Offence Hotspots",
-        "category_field": "Drug_Gi_Category",
+        "category_field": "Drug_Gi_Ca",
         "z_field": "Drug_Z",
         "p_field": "Drug_P",
     },
     {
         "name": "Violent Crime Hotspots",
-        "category_field": "VC_Gi_Category",
+        "category_field": "VC_Gi_Cate",
         "z_field": "VC_Z",
         "p_field": "VC_P",
     },
     {
         "name": "Property Offence Hotspots",
-        "category_field": "PO_Gi_Category",
+        "category_field": "PO_Gi_Cate",
         "z_field": "PO_Z",
         "p_field": "PO_P",
     },
