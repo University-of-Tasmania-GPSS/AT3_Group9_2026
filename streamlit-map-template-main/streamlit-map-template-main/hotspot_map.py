@@ -3,6 +3,7 @@ import leafmap.foliumap as leafmap
 import geopandas as gpd
 import pandas as pd
 from pathlib import Path
+from folium.plugins import MeasureControl
 
 st.set_page_config(
     page_title="Sydney Crime Hotspot Map",
@@ -180,12 +181,31 @@ def classify_category(value):
 
 # 6. CREATE MAP
 
+# m = leafmap.Map(
+#     center=(-33.87, 151.21),
+#     zoom=9,
+#     minimap_control=True,
+#     draw_control=False,
+#     measure_control=True,
+# )
+
 m = leafmap.Map(
     center=(-33.87, 151.21),
     zoom=9,
     minimap_control=True,
     draw_control=False,
-    measure_control=True,
+    measure_control=False,
+)
+
+
+
+m.add(
+    MeasureControl(
+        primary_length_unit="meters",
+        secondary_length_unit="kilometers",
+        primary_area_unit="sqmeters",
+        secondary_area_unit="hectares",
+    )
 )
 
 m.add_basemap("OpenStreetMap")
