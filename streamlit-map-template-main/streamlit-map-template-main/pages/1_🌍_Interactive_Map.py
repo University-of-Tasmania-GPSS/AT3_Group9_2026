@@ -6,17 +6,6 @@ from pathlib import Path
 st.set_page_config(page_title="Sydney Crime Explorer Map", layout="wide")
 
 
-# Find the repository files available to Streamlit 
-root = Path("/mount/src/at3_group9_2026") 
-st.write("Searching repository:", str(root)) 
-if root.exists(): 
-    for path in root.rglob("*.shp"): 
-        st.write("Shapefile found:", str(path)) 
-        
-else: st.error("Repository folder not found.")
-
-
-
 #side bar
     
 
@@ -30,16 +19,15 @@ st.title("Interactive Map")
 # Load shapefile from your GitHub repository
 project_folder = Path(__file__).resolve().parent.parent
 
-shapefile_path = (
-    project_folder
-    / "data"
-    / "SydneyLGAs_MGA202056_socioecon_crime_2015_2025.shp"
-)
+# Find the outer project's data folder 
+project_folder = Path(__file__).resolve().parents[2] 
+shapefile_path = ( project_folder / "data" / "SydneyLGAs_MGA202056_socioecon_crime_2015_2025.shp" ) 
 
-st.write("Looking for shapefile:", str(shapefile_path))
-st.write("File exists:", shapefile_path.exists())
+st.write("Shapefile path:", str(shapefile_path)) 
+st.write("File exists:", shapefile_path.exists()) 
+lga_shapefile = gpd.read_file(shapefile_path) 
 
-lga_shapefile = gpd.read_file(shapefile_path)
+# Convert to WGS84 for web mapping 
 lga_shapefile = lga_shapefile.to_crs(epsg=4326)
 
 # page title
