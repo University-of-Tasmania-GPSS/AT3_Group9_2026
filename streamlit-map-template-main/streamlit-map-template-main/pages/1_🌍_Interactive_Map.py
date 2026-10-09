@@ -14,14 +14,14 @@ st.sidebar.info("""**Study period:** January 2015 – December 2025 **Study area
 
 
 st.title("Interactive Map")
-
+ 
 # load shapefile 
 # Load shapefile from your GitHub repository
 project_folder = Path(__file__).resolve().parent.parent
 
 # Find the outer project's data folder 
 project_folder = Path(__file__).resolve().parents[2] 
-shapefile_path = ( project_folder / "data" / "SydneyLGAs_MGA202056_socioecon_crime_2015_2025.shp" ) 
+shapefile_path = ( project_folder / "data" / "SydneyLGAs_GetisOrd.shp" ) 
 
 st.write("Shapefile path:", str(shapefile_path)) 
 st.write("File exists:", shapefile_path.exists()) 
@@ -87,19 +87,8 @@ for layer in layers:
         
     else: midpoint = (minimum + maximum) / 2 
     
-    def style_function(feature, field=field, color=layer["color"], midpoint=midpoint, maximum=maximum): 
-        
-        value = feature["properties"].get(field, 0) 
-    
-        if value is None: 
-            value = 0 
-        
-        if value <= midpoint: 
-            fill_opacity = 0.35 
-        else: 
-            fill_opacity = 0.75 
-    
-        return { "fillColor": color, "color": "#465746", "weight": 0.8, "fillOpacity": fill_opacity, } 
+    def style_function( feature, field=field, color=layer["color"], opacity=fill_opacity ): 
+        return { "fillColor": color, "color": "#465746", "weight": 0.8, "fillOpacity": opacity, "opacity": 0.8, }
 
 m.add_gdf( layer_gdf, layer_name=layer["name"], style_function=style_function, info_mode="on_click", )
 
