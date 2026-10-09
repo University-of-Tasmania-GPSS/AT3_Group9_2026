@@ -197,9 +197,9 @@ m = leafmap.Map(
     measure_control=False,
 )
 
+m.add_basemap("OpenStreetMap")
 
-
-m.add(
+m.add_child(
     MeasureControl(
         primary_length_unit="meters",
         secondary_length_unit="kilometers",
@@ -208,7 +208,6 @@ m.add(
     )
 )
 
-m.add_basemap("OpenStreetMap")
 
 
 # 7. ADD HOTSPOT LAYERS
