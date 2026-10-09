@@ -2,6 +2,7 @@
 import streamlit as st
 import leafmap.foliumap as leafmap
 import geopandas as gpd 
+import pathlib as Path
 
 st.set_page_config(page_title="Sydney Crime Explorer Map", layout="wide")
 
@@ -15,7 +16,12 @@ st.sidebar.info("""**Study period:** January 2015 – December 2025 **Study area
 st.title("Interactive Map")
 
 # load shapefile 
-shapefile_path = "C:/Users/Molly/OneDrive - University of Tasmania/KGG375_AT3_MM&TP/AT3/Output Data"
+# Load shapefile from your GitHub repository
+shapefile_path = (
+    Path(__file__).resolve().parent.parent
+    / "data"
+    / "SydneyLGAs_MGA202056_socioecon_crime_2015_2025.shp"
+)
 lga_shapefile = gpd.read_file(shapefile_path / "SydneyLGAs_MGA202056_socioecon_crime_2015_2025.shp")
 lga_shapefile = lga_shapefile.to_crs(epsg=4326)  # Convert to WGS84 for mapping
 
