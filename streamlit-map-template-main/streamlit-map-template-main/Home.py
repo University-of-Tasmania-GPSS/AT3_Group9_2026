@@ -229,9 +229,8 @@ st.caption( "Use the layer control on the map to toggle crime " "counts and rate
 
 
 # Colour legend
-
-st.markdown("####Legend####")
-st.markdown("#####Crime Count/Rate#####")
+st.subheader("Legend")
+st.markdown("**Crime Count/Rate**")
 
 legend_columns = st.columns(5)
 
