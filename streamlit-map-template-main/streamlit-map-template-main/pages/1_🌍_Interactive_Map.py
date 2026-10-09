@@ -16,16 +16,18 @@ st.title("Interactive Map")
 
 # load shapefile 
 # Load shapefile from your GitHub repository
+project_folder = Path(__file__).resolve().parent.parent
+
 shapefile_path = (
-    Path(__file__).resolve().parent.parent
+    project_folder
     / "data"
     / "SydneyLGAs_MGA202056_socioecon_crime_2015_2025.shp"
 )
 
-# Load the shapefile
-lga_shapefile = gpd.read_file(shapefile_path)
+st.write("Looking for shapefile:", str(shapefile_path))
+st.write("File exists:", shapefile_path.exists())
 
-# Convert to WGS84 for web mapping
+lga_shapefile = gpd.read_file(shapefile_path)
 lga_shapefile = lga_shapefile.to_crs(epsg=4326)
 
 # page title
