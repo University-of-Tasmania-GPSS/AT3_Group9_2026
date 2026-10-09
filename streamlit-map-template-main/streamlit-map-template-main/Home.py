@@ -44,22 +44,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# st.markdown(
-#     """
-#     Explore recorded criminal incidents from January 2015 to
-#     December 2025. Toggle the map layers to compare total
-#     recorded incidents and crime rates per 1,000 residents.
-#     Click an LGA to inspect its attributes.
-#     """
-# )
-
-
-# #side bar
-# st.sidebar.title("About this map")
-# st.sidebar.info("""**Study period:** January 2015 – December 2025 **Study area:** Selected Sydney LGAs **Data:** NSW Bureau of Crime Statistics and Research and Australian Bureau of Statistics. **Map theme:** Green and yellow """ )
-
-# st.title("Interactive Map")
- 
 # load shapefile 
 # Load shapefile from your GitHub repository
 project_folder = Path(__file__).resolve().parents[1] 
@@ -86,14 +70,6 @@ lga_shapefile = gpd.read_file(shapefile_path)
 
 # Convert to WGS84 for web mapping 
 lga_shapefile = lga_shapefile.to_crs(epsg=4326)
-
-# # page title
-# st.title("Sydney Crime Explorer Map")
-# st.markdown("""Explore recorded crime across Greater Sydney's Local Government Areas (LGAs).
-#     Use the layer control in the top-right corner of the map
-#     to switch between crime counts and crime rates.
-#     Click a polygon to view its statistics.
-#     """)
 
 # Define 6 map layers 
 
@@ -126,7 +102,7 @@ map_heading, opacity_column = st.columns(
 
 with map_heading:
     st.caption(
-        "Toggle layers using the map's layer control."
+        "Toggle layers using the map's layer control. This web map presents the spatial distribution of recorded count and rate per 1000 people of criminal incidents across selected Greater Sydney Local Government Areas (LGAs) over the period January 2015 to December 2025."
     )
 
 with opacity_column:
@@ -156,58 +132,97 @@ m = leafmap.Map(
 m.add_basemap("OpenStreetMap")
 
 
-st.sidebar.subheader("Map appearance")
+colours = [
+    "#ffffb2",
+    "#fecc5c",
+    "#fd8d3c",
+    "#f03b20",
+    "#bd0026",
+]
 
-transparency = st.sidebar.slider(
-    "Polygon opacity",
-    min_value=0,
-    max_value=100,
-    value=40,
-    step=5,
-)
+# Friendly labels for the click pop-ups
+friendly_labels = {
+    "LGA_NAME25": "Local Government Area",
+    "Drugs_Tota": "Total drug offences (2015–2025)",
+    "VC_Total": "Total violent crime incidents (2015–2025)",
+    "PO_Total": "Total property offences (2015–2025)",
+    "Drugs/1000": "Drug offences per 1,000 residents",
+    "VC/1000": "Violent crime per 1,000 residents",
+    "PO/1000": "Property offences per 1,000 residents",
+}
 
-fill_opacity = transparency / 100
+for layer in layers:
+    field = layer["field"]
 
+    if field not in lga_shapefile.columns:
+        st.warning(f"Missing field: {field}")
+        continue
 
-# add polygon layers 
-colours = [ "#ffffb2", "#fecc5c", "#fd8d3c", "#f03b20", "#bd0026", ] 
+    # Keep the original field names temporarily
+    layer_gdf = lga_shapefile[
+        ["LGA_NAME25", field, "geometry"]
+    ].copy()
 
-for layer in layers: 
-    field = layer["field"] 
-    
-    if field not in lga_shapefile.columns: 
-        st.warning(f"Missing field: {field}") 
-        continue 
-    
-    layer_gdf = lga_shapefile[ ["LGA_NAME25", field, "geometry"] ].copy() 
-    layer_gdf[field] = pd.to_numeric( layer_gdf[field], errors="coerce" ) 
-    values = layer_gdf[field].dropna() 
-    
-    if values.empty: 
-        st.warning(f"No data for {layer['name']}") 
-        continue 
+    # Rename fields for the map display
+    layer_gdf = layer_gdf.rename(
+        columns=friendly_labels
+    )
 
-    breaks = values.quantile( [0, 0.2, 0.4, 0.6, 0.8, 1] ).tolist() 
+    # The friendly name for the selected crime variable
+    display_field = friendly_labels[field]
 
-    def style_function( feature, field=field, breaks=breaks, colours=colours, opacity=fill_opacity, ): 
-        
-        value = feature["properties"].get(field) 
-        
-        if value is None or pd.isna(value): 
-            fill_colour = "#d9d9d9" 
-        else: 
-            class_index = sum( value > b for b in breaks[1:-1] ) 
-            class_index = min(class_index, 4) 
-            fill_colour = colours[class_index] 
-            
-        return { "fillColor": fill_colour, "color": "#555555", "weight": 1, "fillOpacity": opacity, "opacity": 0.8, } 
-    
-    m.add_gdf( layer_gdf, layer_name=layer["name"], style_function=style_function, info_mode="on_click", )
+    # Convert crime values to numbers
+    layer_gdf[display_field] = pd.to_numeric(
+        layer_gdf[display_field],
+        errors="coerce",
+    )
+
+    # Calculate quantile classes using the renamed field
+    values = layer_gdf[display_field].dropna()
+
+    if values.empty:
+        st.warning(f"No data for {layer['name']}")
+        continue
+
+    breaks = values.quantile(
+        [0, 0.2, 0.4, 0.6, 0.8, 1]
+    ).tolist()
+
+    def style_function(
+        feature,
+        display_field=display_field,
+        breaks=breaks,
+        colours=colours,
+        opacity=fill_opacity,
+    ):
+        value = feature["properties"].get(display_field)
+
+        if value is None or pd.isna(value):
+            fill_colour = "#d9d9d9"
+        else:
+            class_index = sum(
+                value > b for b in breaks[1:-1]
+            )
+            class_index = min(class_index, 4)
+            fill_colour = colours[class_index]
+
+        return {
+            "fillColor": fill_colour,
+            "color": "#555555",
+            "weight": 1,
+            "fillOpacity": opacity,
+            "opacity": 0.8,
+        }
+
+    m.add_gdf(
+        layer_gdf,
+        layer_name=layer["name"],
+        style_function=style_function,
+        info_mode="on_click",
+    )
 
 # Display map 
-
-
-st.subheader("Interactive crime map") 
+st.subheader("Interactive map of crime counts and rates") 
 m.to_streamlit(height=700) 
 
 st.caption( "Use the layer control on the map to toggle crime " "counts and rates. Click an LGA to inspect its attributes." )
@@ -215,7 +230,7 @@ st.caption( "Use the layer control on the map to toggle crime " "counts and rate
 
 # Colour legend
 
-st.markdown("#### Crime intensity legend")
+st.markdown("#### Crime Count/Rate legend")
 
 legend_columns = st.columns(5)
 
@@ -260,17 +275,8 @@ st.divider()
 
 st.subheader("About this Map")
 
-st.markdown(
-    """
-    This web map presents the spatial distribution of
-    recorded criminal incidents across selected Greater
-    Sydney Local Government Areas (LGAs) over the period
-    January 2015 to December 2025.
-    """
-)
-
 with st.container(border=True):
-    st.markdown("** metadata**")
+    st.markdown("**Metadata**")
 
     meta_left, meta_right = st.columns(2)
 
@@ -294,22 +300,21 @@ with st.container(border=True):
             """
         )
 
-
-st.markdown("**Methodological notes**")
-
-st.markdown(
-    """
-    - Crime counts represent the sum of recorded incidents
-      across 2015–2025.
-    - Crime rates are calculated as total recorded incidents
-      divided by the relevant population, multiplied by 1,000.
-    - The graduated colour scale uses five quantile classes.
-      Class boundaries are calculated separately for each
-      crime variable.
-    - Recorded incidents describe offences known to police
-      and do not necessarily represent all crime that occurs.
-    """
-)
+    with meta_right:
+        st.markdown(
+            """
+            **Methodological notes:**
+              - Crime counts represent the sum of recorded incidents
+                  across 2015–2025.
+                - Crime rates are calculated as total recorded incidents
+                  divided by the relevant population, multiplied by 1,000.
+                - The graduated colour scale uses five quantile classes.
+                  Class boundaries are calculated separately for each
+                  crime variable.
+                - Recorded incidents describe offences known to police
+                  and do not necessarily represent all crime that occurs.
+            """
+        )
 
 
 
