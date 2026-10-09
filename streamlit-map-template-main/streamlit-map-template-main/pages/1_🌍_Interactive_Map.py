@@ -3,6 +3,8 @@ import streamlit as st
 import leafmap.foliumap as leafmap
 import geopandas as gpd 
 from pathlib import Path
+import pandas as pd
+
 st.set_page_config(page_title="Sydney Crime Explorer Map", layout="wide")
 
 
@@ -74,46 +76,58 @@ fill_opacity = transparency / 100
 
 
 # add polygon layers 
+# Green-to-yellow colour scale: low to high 
+colours = [ "#ffffcc", # Very low - pale yellow 
+           "#c2e699", # Low 
+           "#78c679", # Moderate 
+           "#31a354", # High 
+           "#006837", # Very high - dark green 
+] 
+        
 for layer in layers: 
     field = layer["field"] 
     
+    # Check the field exists 
     if field not in lga_shapefile.columns: 
         st.warning( f"Skipping {layer['name']}: " 
-                   f"field '{field}' was not found." ) 
+                   f"field '{field}' was not found." 
+        ) 
         continue 
     
-    # Use a separate GeoDataFrame for each layer 
-    layer_gdf = lga_shapefile[ 
-                    ["LGA_NAME25", field, "geometry"] 
-    ].copy() 
+    # Keep only the columns needed for this layer 
+    layer_gdf = lga_shapefile[ ["LGA_NAME25", field, "geometry"] ].copy() 
     
-    layer_gdf[field] = ( 
-                        layer_gdf[field].fillna(0) ) 
+    # Convert the field to numeric values 
+    layer_gdf[field] = pd.to_numeric( layer_gdf[field], errors="coerce" ) 
     
-    # Graduated fill colour based on the selected field 
-    values = layer_gdf[field] 
-    minimum = values.min() 
-    maximum = values.max() 
+    # Calculate the quantile breaks for this layer 
+    values = layer_gdf[field].dropna() 
     
-    if minimum == maximum: 
-        midpoint = minimum 
+    if values.empty: 
+        st.warning(f"No valid data for {layer['name']}") 
+        continue 
+breaks = values.quantile( [0, 0.2, 0.4, 0.6, 0.8, 1] ).tolist() 
+
+# Style each LGA according to its crime value 
+def style_function( feature, field=field, breaks=breaks, colours=colours, opacity=fill_opacity, ): 
+    value = feature["properties"].get(field) 
+    # Show missing data in grey 
+    if value is None or pd.isna(value): 
+        fill_colour = "#d9d9d9" 
+    
+    else: 
+        # Default to the highest colour 
+        fill_colour = colours[-1] 
         
-    else: midpoint = (minimum + maximum) / 2 
+        # Assign the colour based on quantile class 
+        for i in range(1, len(breaks)): 
+            if value <= breaks[i]: fill_colour = colours[i - 1] 
+            break 
+        
+        return { "fillColor": fill_colour, "color": "#465746", "weight": 0.8, "fillOpacity": opacity, "opacity": 0.8, } 
     
-    def style_function(
-        feature,
-        field=field,
-        color=layer["color"],
-        opacity=fill_opacity,
-        ):
-        return {
-            "fillColor": color,
-            "color": "#465746",
-            "weight": 0.8,
-            "fillOpacity": opacity,
-            "opacity": 0.8,
-        }
-m.add_gdf( layer_gdf, layer_name=layer["name"], style_function=style_function, info_mode="on_click", )
+    # Add this layer to the map 
+    m.add_gdf( layer_gdf, layer_name=layer["name"], style_function=style_function, info_mode="on_click", )
 
 # Display map 
 
