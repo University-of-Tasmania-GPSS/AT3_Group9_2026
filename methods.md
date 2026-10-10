@@ -1,4 +1,12 @@
 # Methods
+
+## Methodological Workflow
+
+The following flowchart summarises the research
+workflow, from data collection and preparation
+through to spatial and socioeconomic analysis.
+
+```{mermaid}
 flowchart TD
     A["1. Research question<br/>Crime distribution and socioeconomic associations"]
     B["2. Data collection<br/>ABS boundaries, BOCSAR crime records<br/>and 2021 Census data"]
@@ -23,6 +31,110 @@ flowchart TD
     class B,C,D prep
     class E spatial
     class F socio
+```
+
+
+
+## Detailed Methodology
+
+The following sections provide further details of the data preparation, socioeconomic statistical analysis and spatial hotspot analysis. Expand each section to explore the methodology.
+
+````{dropdown} Data Collection and Preparation
+**Data sources**
+
+Three primary datasets were used in this study:
+
+| Dataset | Source | Purpose |
+|---|---|---|
+| Local Government Area boundaries (2025) | Australian Bureau of Statistics (ABS) | Provided polygon geometries and geographic identifiers for the 30 selected LGAs. |
+| Recorded Criminal Incidents by Month by LGA | NSW Bureau of Crime Statistics and Research (BOCSAR) | Provided monthly recorded crime counts for 2015–2025. |
+| 2021 Census General Community Profile | Australian Bureau of Statistics (ABS) | Provided socioeconomic indicators for education, household income and labour force characteristics. |
+
+**Crime classification**
+
+Recorded offences were grouped into three categories:
+
+- **Drug offences:** Possession, dealing, manufacturing and importing.
+- **Violent crime:** Abduction and kidnapping, assault, coercive control, homicide, intimidation, stalking and harassment, sexual offences, and robbery.
+- **Property offences:** Theft, arson and malicious damage to property.
+
+**Data preparation**
+
+Python was used to clean and integrate the datasets. The workflow involved:
+
+1. Selecting the 30 study-area LGAs using their geographic identifiers.
+2. Filtering crime records to the selected LGAs and relevant offence categories.
+3. Aggregating monthly crime records into annual counts for 2015–2025.
+4. Calculating total recorded crime counts for each crime category across the study period.
+5. Extracting the relevant socioeconomic indicators from the 2021 Census.
+6. Joining crime and socioeconomic attributes to the LGA polygons using matching geographic identifiers.
+7. Checking for missing values, inconsistent identifiers and invalid geometries.
+
+The resulting spatial dataset provided a consistent geographic framework for mapping crime, calculating rates, identifying hotspots and examining socioeconomic associations.
+````
+
+````{dropdown} Socioeconomic Statistical Analysis
+The socioeconomic analysis investigated associations between crime and three indicators: educational attainment, household income and unemployment.
+
+**Socioeconomic indicators**
+
+- **Education:** Highest year of school completion, sourced from 2021 Census Table G01.
+- **Household income:** Median total weekly household income, sourced from 2021 Census Table G02.
+- **Unemployment:** Selected labour force statistics, sourced from 2021 Census Table G43.
+
+**Analytical approach**
+
+The socioeconomic indicators were compared with drug offences, violent crime and property offences to investigate potential relationships between socioeconomic conditions and crime.
+
+The analysis considered:
+1. Overall associations between the socioeconomic indicators and the three crime categories.
+2. Relationships between socioeconomic characteristics and crime across individual LGAs.
+3. Patterns that could be explored further through maps and graphs.
+
+The socioeconomic variables represent conditions recorded at the 2021 Census, while crime data span 2015–2025. Therefore, the results should be interpreted as associations rather than evidence of causation. The temporal difference between datasets is also an important limitation.
+
+*Note: Specify the correlation coefficient and any significance tests used once the statistical methods and results have been finalised.*
+````
+
+````{dropdown} Spatial Hotspot Statistical Analysis
+**Crime counts and rates**
+
+Total recorded incidents were calculated for each LGA and crime category across 2015–2025.
+
+Crime rates were calculated using:
+
+$$
+\text{Crime rate} =
+\frac{\text{Total recorded incidents (2015–2025)}}
+{\text{Population denominator}}
+\times 1000
+$$
+
+This standardised measure expresses recorded incidents per 1,000 residents. The population denominator used in the analysis should be specified in the final methodology.
+
+**Getis–Ord Gi* hotspot analysis**
+
+Local Getis–Ord Gi* statistics were calculated to identify spatial clusters of high and low crime-rate values across neighbouring LGAs.
+
+The analysis used:
+
+- **Spatial weights:** Queen contiguity, where LGAs are neighbours if their polygons share an edge or vertex.
+- **Permutations:** 199 permutations, selected because larger permutation counts caused computational problems.
+- **Significance threshold:** p < 0.05.
+
+The results classified LGAs as **hotspots**, **coldspots** or **not statistically significant**, according to the calculated statistics and significance criteria.
+
+Hotspots indicate areas where high values are spatially clustered relative to the spatial-randomness assumption. Coldspots indicate clusters of low values. Areas that do not meet the selected significance threshold are classified as not statistically significant.
+
+**Mapping and interpretation**
+
+The analysis produced thematic maps of crime counts, crime rates and hotspot classifications for drug offences, violent crime and property offences. These maps were used to compare the spatial patterns of each crime category and identify areas for further investigation.
+````
+
+
+
+
+
 
 
 
