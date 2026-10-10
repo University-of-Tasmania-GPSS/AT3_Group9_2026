@@ -4,6 +4,7 @@ import leafmap.foliumap as leafmap
 import geopandas as gpd 
 from pathlib import Path
 import pandas as pd
+from folium.plugins import MeasureControl
 
 st.set_page_config(page_title="Sydney Crime Explorer Map", page_icon = "🌏", layout="wide")
 
