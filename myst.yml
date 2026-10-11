@@ -2,12 +2,12 @@
 version: 1
 project:
   id: 7a2c2ab9-1c62-43bd-975f-beecae43d6c8
-  title: KGG375 GIS Project
+  title: Overview
 
   toc:
     - file: index.md
 
-    - title: Overview of Crime Patternsin Greater Sydney
+    - title: Crime Patterns in Greater Sydney
       children:
         - file: methods.md
         - file: results.md
