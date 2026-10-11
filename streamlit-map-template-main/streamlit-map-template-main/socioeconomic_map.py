@@ -12,7 +12,7 @@ from folium.plugins import MeasureControl
 # ==================================================
 
 st.set_page_config(
-    page_title="Sydney Socioeconomic Correlation Map",
+    page_title="Sydney Crime Trends Map",
     page_icon="🌏",
     layout="wide",
 )
@@ -37,10 +37,10 @@ st.markdown(
             letter-spacing: 2px;
             margin-bottom: 8px;
         ">
-            SYDNEY SOCIOECONOMIC CORRELATION MAP | 2015–2025
+            SYDNEY CRIME TRENDS | 2015-2025
         </p>
         <h1 style="color: white; margin: 0;">
-            Mapping Crime and Socioeconomic Relationships
+            Mapping Crime Trends Across Greater Sydney
         </h1>
         <p style="
             color: #E5EDE7;
@@ -48,10 +48,11 @@ st.markdown(
             margin-top: 10px;
             margin-bottom: 0;
         ">
-            Explore how socioeconomic factors relate to drug
-            offences, violent crime and property offences across
-            selected Local Government Areas in Greater Sydney.
-            Toggle the layers and click an LGA to inspect its values.
+            Explore how drug offences, violent crime and property
+            offences have changed over time across selected
+            Local Government Areas in Greater Sydney, Australia.
+            Toggle the layers and click an LGA to inspect its
+            numerical value and trend classification.
         </p>
     </div>
     """,
@@ -72,9 +73,7 @@ shapefile_path = (
 )
 
 if not shapefile_path.exists():
-    st.error(
-        f"Shapefile not found: {shapefile_path}"
-    )
+    st.error(f"Shapefile not found: {shapefile_path}")
     st.stop()
 
 try:
@@ -101,19 +100,19 @@ except Exception as e:
 
 layers = [
     {
-        "name": "Drug offences — socioeconomic correlation",
+        "name": "Drug offences - change over time",
         "field": "Drug_m",
-        "significance": "sign_drug",
+        "classification": "sign_drug",
     },
     {
-        "name": "Violent crime — socioeconomic correlation",
+        "name": "Violent crime - change over time",
         "field": "VC_m",
-        "significance": "sign_vc",
+        "classification": "sign_vc",
     },
     {
-        "name": "Property offences — socioeconomic correlation",
+        "name": "Property offences - change over time",
         "field": "PO_m",
-        "significance": "sign_po",
+        "classification": "sign_po",
     },
 ]
 
@@ -145,7 +144,7 @@ if missing_fields:
     )
 
     st.write(
-        "Available columns:",
+        "Available shapefile columns:",
         lga_shapefile.columns.tolist(),
     )
 
@@ -156,7 +155,7 @@ if missing_fields:
 # 6. MAP INTRODUCTION AND OPACITY SLIDER
 # ==================================================
 
-st.subheader("Interactive socioeconomic correlation map")
+st.subheader("Interactive crime trends map")
 
 map_heading, opacity_column = st.columns(
     [3, 2],
@@ -165,10 +164,11 @@ map_heading, opacity_column = st.columns(
 
 with map_heading:
     st.caption(
-        "Use the layer control to switch between drug offences, "
-        "violent crime and property offences. Polygon colours "
-        "show the correlation classification over time. "
-        "Click an LGA to inspect its numerical correlation value."
+        "Explore changes in recorded crime trends across "
+        "Greater Sydney LGAs from 2015 to 2025. Toggle the "
+        "drug offences, violent crime and property offences "
+        "layers. Click an LGA to inspect its numerical value "
+        "and trend classification."
     )
 
 with opacity_column:
@@ -179,7 +179,8 @@ with opacity_column:
         value=80,
         step=5,
         help=(
-            "Lower values make the polygons more transparent."
+            "Lower values make the polygons more transparent "
+            "so the basemap is easier to see."
         ),
     )
 
@@ -187,19 +188,25 @@ fill_opacity = transparency / 100
 
 
 # ==================================================
-# 7. DEFINE THE THREE COLOURS
+# 7. DEFINE COLOURS AND CLASSIFICATIONS
 # ==================================================
 
 SIGN_COLOURS = {
-    "positive": "#D73027",  # Red
-    "none": "#FFFFFF",      # White
-    "negative": "#4575B4",  # Blue
-    "missing": "#D9D9D9",   # Grey for missing/unrecognised data
+    "increasing": "#D73027",  # Red
+    "no_correlation": "#FFFFFF",  # White
+    "decreasing": "#4575B4",  # Blue
+    "missing": "#D9D9D9",  # Grey for missing/unrecognised data
 }
 
 
-def classify_correlation(value):
-    """Match the exact trend labels stored in the shapefile."""
+def classify_trend(value):
+    """
+    Match the trend classifications stored in the shapefile.
+
+    Increasing over Time -> Red
+    No Correlation over Time -> White
+    Decreasing over Time -> Blue
+    """
 
     if value is None or pd.isna(value):
         return "missing"
@@ -207,13 +214,13 @@ def classify_correlation(value):
     value = str(value).strip().lower()
 
     if value == "increasing over time":
-        return "positive"
-
-    elif value == "decreasing over time":
-        return "negative"
+        return "increasing"
 
     elif value == "no correlation over time":
-        return "none"
+        return "no_correlation"
+
+    elif value == "decreasing over time":
+        return "decreasing"
 
     else:
         return "missing"
@@ -249,9 +256,9 @@ m.add_child(
 
 friendly_labels = {
     "LGA_NAME25": "Local Government Area",
-    "Drug_m": "Drug offences - gradient value",
-    "VC_m": "Violent crime - gradient value",
-    "PO_m": "Property offences - gradient value",
+    "Drug_m": "Drug offences - numerical trend value",
+    "VC_m": "Violent crime - numerical trend value",
+    "PO_m": "Property offences - numerical trend value",
     "sign_drug": "Drug offences - trend classification",
     "sign_vc": "Violent crime - trend classification",
     "sign_po": "Property offences - trend classification",
@@ -265,43 +272,48 @@ friendly_labels = {
 for layer in layers:
 
     field = layer["field"]
-    sign_field = layer["significance"]
+    classification_field = layer["classification"]
 
-    # Keep the numeric value and its matching classification
+    # Select the LGA name, numerical value, classification
+    # and geometry for this layer.
     layer_gdf = lga_shapefile[
         [
             "LGA_NAME25",
             field,
-            sign_field,
+            classification_field,
             "geometry",
         ]
     ].copy()
 
-    # Ensure the actual correlation value is numeric
+    # Ensure the numerical value is numeric
     layer_gdf[field] = pd.to_numeric(
         layer_gdf[field],
         errors="coerce",
     )
 
-    # Rename fields for readable click popups
+    # Rename attributes for readable click popups
     layer_gdf = layer_gdf.rename(
         columns=friendly_labels
     )
 
-    display_sign = friendly_labels[sign_field]
+    display_classification = friendly_labels[
+        classification_field
+    ]
 
     def style_function(
         feature,
-        display_sign=display_sign,
+        display_classification=display_classification,
         opacity=fill_opacity,
     ):
-        # Classification determines the polygon colour
-        sign_value = feature["properties"].get(
-            display_sign
+        # Polygon colour is determined by the trend label,
+        # not by the numerical value.
+        trend_value = feature["properties"].get(
+            display_classification
         )
 
-        category = classify_correlation(sign_value)
-        fill_colour = SIGN_COLOURS[category]
+        trend_category = classify_trend(trend_value)
+
+        fill_colour = SIGN_COLOURS[trend_category]
 
         return {
             "fillColor": fill_colour,
@@ -323,14 +335,15 @@ for layer in layers:
 # 11. DISPLAY THE MAP
 # ==================================================
 
-st.subheader("Explore correlations across Greater Sydney")
+st.subheader("Explore crime trends across Greater Sydney")
 
 m.to_streamlit(height=700)
 
 st.caption(
-    "Toggle the three layers using the map's layer control. "
-    "Click an LGA polygon to view the corresponding numerical "
-    "correlation value and classification."
+    "Use the map's layer control to switch between drug "
+    "offences, violent crime and property offences. Click an "
+    "LGA polygon to view its numerical trend value and "
+    "classification."
 )
 
 
@@ -341,9 +354,9 @@ st.caption(
 st.subheader("Legend")
 
 legend_items = [
-    (SIGN_COLOURS["positive"], "Increasing over Time"),
-    (SIGN_COLOURS["none"], "No correlation over Time"),
-    (SIGN_COLOURS["negative"], "Decreasing correlation over Time"),
+    (SIGN_COLOURS["increasing"], "Increasing over Time"),
+    (SIGN_COLOURS["no_correlation"], "No Correlation over Time"),
+    (SIGN_COLOURS["decreasing"], "Decreasing over Time"),
 ]
 
 legend_columns = st.columns(3)
@@ -368,10 +381,11 @@ for i, (colour, label) in enumerate(legend_items):
         )
 
 st.caption(
-    "Red represents increasing gradient, white represents "
-    "no correlation, and blue represents decreasing gradient. "
-    "Grey indicates missing or unrecognised classification data. "
-    "Numerical values are available by clicking an LGA."
+    "Red indicates an increasing crime trend, white indicates "
+    "no correlation over time, and blue indicates a decreasing "
+    "crime trend. Grey indicates missing or unrecognised "
+    "classification data. Click an LGA to inspect its "
+    "numerical value."
 )
 
 
@@ -394,45 +408,47 @@ with st.container(border=True):
             """
             **Study period:** January 2015 - December 2025
 
-            **Coordinate System:** GDA2020 / MGA Zone 56 (EPSG:7856); reprojected to WGS84 (EPSG:4326) for web mapping.
+            **Coordinate system:** GDA2020 / MGA Zone 56
+            (EPSG:7856), reprojected to WGS84 (EPSG:4326)
+            for web mapping.
 
-            **Study area:** Selected Greater Sydney Local Government Areas
-            
-            **Crime categories:** Drug offences, violent crime and property offences
+            **Study area:** Selected Greater Sydney
+            Local Government Areas.
 
             **Mapped variables:** Drug offences, violent crime
             and property offences.
             
             **Data Source:** LGA polygons, Australian Bureau of Statistics Local Government Area boundaries (2025). 
             Crime data, NSW Bureau of Crime Statistics and Research, Recorded Criminal incidents by month by LGA. 
-            Socioeconomic data, Australian Bureau of Statistics, 2021. Data cleaning conducted by T. Powell, 2026. 
-            Gradient calculation and classification for each LGA conducted by T.Powell, 2026.
+            Data cleaning conducted by T. Powell, 2026. Crime rate computed by M. Marshall, 2026. Gradient calculation 
+            and classification for each LGA conducted by T. Powell, 2026.
 
             **Map Producer:** Molly Marshall, 2026
                                             
             **Date:** 11 October 2026
-
             """
         )
-        
 
     with meta_right:
         st.markdown(
             """
             **Methodological notes:**
 
-            - Polygon colours are determined by the relevant
-              classification field: `sign_drug`, `sign_vc`
-              or `sign_po`.
-            - Numerical correlation values are stored in
-              `Drug_m`, `VC_m` and `PO_m` and are displayed
-              when a polygon is clicked.
+            - Each layer displays the temporal trend classification
+              for one crime category in each LGA.
+            - Red represents increasing trends, white represents
+              no correlation over time, and blue represents
+              decreasing trends.
+            - Classifications are determined by `sign_drug`,
+              `sign_vc` and `sign_po`.
+            - The associated numerical values are stored in
+              `Drug_m`, `VC_m` and `PO_m` and displayed when
+              an LGA is clicked.
             - Grey polygons indicate missing or unrecognised
               classification values.
-            - Correlation does not establish causation.
-            - Interpretation depends on the methodology used
-              to calculate the underlying correlations.
+            - Recorded incidents represent offences known to
+              police and may not reflect all crime that occurs.
+            - An observed trend does not, by itself, explain
+              why crime increased or decreased.
             """
         )
-
-   
