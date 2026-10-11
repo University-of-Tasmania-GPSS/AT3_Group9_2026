@@ -7,20 +7,20 @@ from pathlib import Path
 from folium.plugins import MeasureControl
 
 
-# --------------------------------------------------
-# PAGE CONFIGURATION
-# --------------------------------------------------
+# ==================================================
+# 1. PAGE CONFIGURATION
+# ==================================================
 
 st.set_page_config(
-    page_title="Sydney Crime and Socioeconomic Map",
+    page_title="Sydney Socioeconomic Correlation Map",
     page_icon="🌏",
     layout="wide",
 )
 
 
-# --------------------------------------------------
-# HEADER
-# --------------------------------------------------
+# ==================================================
+# 2. PAGE HEADER
+# ==================================================
 
 st.markdown(
     """
@@ -37,10 +37,10 @@ st.markdown(
             letter-spacing: 2px;
             margin-bottom: 8px;
         ">
-            SYDNEY CRIME AND SOCIOECONOMIC MAP
+            SYDNEY SOCIOECONOMIC CORRELATION MAP | 2015–2025
         </p>
         <h1 style="color: white; margin: 0;">
-            Mapping Crime and Socioeconomic Correlations
+            Mapping Crime and Socioeconomic Relationships
         </h1>
         <p style="
             color: #E5EDE7;
@@ -48,9 +48,10 @@ st.markdown(
             margin-top: 10px;
             margin-bottom: 0;
         ">
-            Explore the relationship between socioeconomic
-            conditions and drug offences, violent crime and
-            property offences across Greater Sydney LGAs.
+            Explore how socioeconomic factors relate to drug
+            offences, violent crime and property offences across
+            selected Local Government Areas in Greater Sydney.
+            Toggle the layers and click an LGA to inspect its values.
         </p>
     </div>
     """,
@@ -58,9 +59,9 @@ st.markdown(
 )
 
 
-# --------------------------------------------------
-# LOAD SHAPEFILE
-# --------------------------------------------------
+# ==================================================
+# 3. LOAD SHAPEFILE
+# ==================================================
 
 project_folder = Path(__file__).resolve().parents[1]
 data_folder = project_folder / "data"
@@ -79,54 +80,50 @@ if not shapefile_path.exists():
 try:
     lga_shapefile = gpd.read_file(shapefile_path)
 
-    # Convert to WGS84 for web mapping
     if lga_shapefile.crs is None:
         st.error(
-            "The shapefile has no defined CRS. "
-            "Set its correct source CRS before reprojecting."
+            "The shapefile has no defined coordinate reference "
+            "system (CRS). Please define its correct source CRS."
         )
         st.stop()
 
-    lga_shapefile = lga_shapefile.to_crs(
-        epsg=4326
-    )
+    # Reproject to WGS84 for web mapping
+    lga_shapefile = lga_shapefile.to_crs(epsg=4326)
 
 except Exception as e:
     st.error(f"Shapefile loading failed: {e}")
     st.stop()
 
 
-# --------------------------------------------------
-# CONFIGURE THE THREE CORRELATION LAYERS
-# --------------------------------------------------
+# ==================================================
+# 4. DEFINE THE THREE MAP LAYERS
+# ==================================================
 
 layers = [
     {
-        "name": "Drug offences — correlation",
+        "name": "Drug offences — socioeconomic correlation",
         "field": "Drug_m",
         "significance": "sign_drug",
-        "colour": "#2166AC",
     },
     {
-        "name": "Violent crime — correlation",
+        "name": "Violent crime — socioeconomic correlation",
         "field": "VC_m",
         "significance": "sign_vc",
-        "colour": "#43956B",
     },
     {
-        "name": "Property offences — correlation",
+        "name": "Property offences — socioeconomic correlation",
         "field": "PO_m",
         "significance": "sign_po",
-        "colour": "#8E63A9",
     },
 ]
 
 
-# --------------------------------------------------
-# CHECK REQUIRED FIELDS
-# --------------------------------------------------
+# ==================================================
+# 5. CHECK REQUIRED COLUMNS
+# ==================================================
 
 required_fields = [
+    "LGA_NAME25",
     "Drug_m",
     "VC_m",
     "PO_m",
@@ -143,17 +140,23 @@ missing_fields = [
 
 if missing_fields:
     st.error(
-        "The shapefile is missing these required columns: "
+        "The shapefile is missing these columns: "
         + ", ".join(missing_fields)
     )
+
+    st.write(
+        "Available columns:",
+        lga_shapefile.columns.tolist(),
+    )
+
     st.stop()
 
 
-# --------------------------------------------------
-# MAP INTRODUCTION AND OPACITY CONTROL
-# --------------------------------------------------
+# ==================================================
+# 6. MAP INTRODUCTION AND OPACITY SLIDER
+# ==================================================
 
-st.subheader("Interactive correlation map")
+st.subheader("Interactive socioeconomic correlation map")
 
 map_heading, opacity_column = st.columns(
     [3, 2],
@@ -162,9 +165,10 @@ map_heading, opacity_column = st.columns(
 
 with map_heading:
     st.caption(
-        "Toggle the three crime layers using the map controls. "
-        "Click an LGA to inspect its correlation coefficient "
-        "and significance classification."
+        "Use the layer control to switch between drug offences, "
+        "violent crime and property offences. Polygon colours "
+        "show the correlation classification over time. "
+        "Click an LGA to inspect its numerical correlation value."
     )
 
 with opacity_column:
@@ -172,7 +176,7 @@ with opacity_column:
         "Polygon opacity (%)",
         min_value=0,
         max_value=100,
-        value=70,
+        value=80,
         step=5,
         help=(
             "Lower values make the polygons more transparent."
@@ -182,51 +186,68 @@ with opacity_column:
 fill_opacity = transparency / 100
 
 
-# --------------------------------------------------
-# COLOUR SCALE
-# --------------------------------------------------
+# ==================================================
+# 7. DEFINE THE THREE COLOURS
+# ==================================================
 
-# Negative correlations: blue
-# Near-zero correlations: white
-# Positive correlations: red
-
-colours = [
-    "#2166AC",
-    "#67A9CF",
-    "#D1E5F0",
-    "#F7F7F7",
-    "#FDDBC7",
-    "#EF8A62",
-    "#B2182B",
-]
+SIGN_COLOURS = {
+    "positive": "#D73027",  # Red
+    "none": "#FFFFFF",      # White
+    "negative": "#4575B4",  # Blue
+    "missing": "#D9D9D9",   # Grey for missing/unrecognised data
+}
 
 
-def correlation_colour(value):
+def classify_correlation(value):
     """
-    Map a correlation coefficient between -1 and +1
-    onto a diverging colour scale.
+    Convert a classification value into one of the three
+    correlation categories.
 
-    Assumes the stored values are correlation
-    coefficients bounded by -1 and +1.
+    Adjust this function if the shapefile uses different
+    category labels or numeric codes.
     """
 
-    if pd.isna(value):
-        return "#D9D9D9"
+    if value is None or pd.isna(value):
+        return "missing"
 
-    value = max(-1.0, min(1.0, float(value)))
+    value = str(value).strip().lower()
 
-    # Seven equal-width intervals from -1 to +1
-    index = min(
-        int((value + 1) / 2 * len(colours)),
-        len(colours) - 1,
-    )
+    # Positive correlation
+    if (
+        "positive" in value
+        or value in {"+", "+1", "1", "1.0"}
+    ):
+        return "positive"
 
-    return colours[index]
+    # Negative correlation
+    if (
+        "negative" in value
+        or value in {"-", "-1", "-1.0"}
+    ):
+        return "negative"
+
+    # No correlation
+    if (
+        "no correlation" in value
+        or "no association" in value
+        or "uncorrelated" in value
+        or value in {
+            "0",
+            "0.0",
+            "none",
+            "neutral",
+        }
+    ):
+        return "none"
+
+    # Do not silently assign an unknown classification
+    # to a correlation category.
+    return "missing"
 
 
-# --------------------------------------------------
-# CREATE MAP
-# --------------------------------------------------
+# ==================================================
+# 8. CREATE THE MAP
+# ==================================================
 
 m = leafmap.Map(
     center=(-33.87, 151.21),
@@ -248,84 +269,72 @@ m.add_child(
 )
 
 
-# --------------------------------------------------
-# FRIENDLY POPUP LABELS
-# --------------------------------------------------
+# ==================================================
+# 9. FRIENDLY LABELS FOR CLICK POPUPS
+# ==================================================
 
 friendly_labels = {
     "LGA_NAME25": "Local Government Area",
-    "Drug_m": "Drug offences - correlation value",
-    "VC_m": "Violent crime - correlation value",
-    "PO_m": "Property offences - correlation value",
-    "sign_drug": "Drug offences - trend classification",
-    "sign_vc": "Violent crime - trend classification",
-    "sign_po": "Property offences - trend classification",
+    "Drug_m": "Drug offences — correlation value",
+    "VC_m": "Violent crime — correlation value",
+    "PO_m": "Property offences — correlation value",
+    "sign_drug": "Drug offences — trend classification",
+    "sign_vc": "Violent crime — trend classification",
+    "sign_po": "Property offences — trend classification",
 }
 
 
-# --------------------------------------------------
-# ADD THE THREE TOGGLEABLE LAYERS
-# --------------------------------------------------
+# ==================================================
+# 10. ADD THE THREE TOGGLEABLE LAYERS
+# ==================================================
 
 for layer in layers:
 
     field = layer["field"]
-    significance_field = layer["significance"]
+    sign_field = layer["significance"]
 
-    # Select the fields needed for this layer's popup
+    # Keep the numeric value and its matching classification
     layer_gdf = lga_shapefile[
         [
             "LGA_NAME25",
             field,
-            significance_field,
+            sign_field,
             "geometry",
         ]
     ].copy()
 
-    # Convert the gradient variable to numeric
+    # Ensure the actual correlation value is numeric
     layer_gdf[field] = pd.to_numeric(
         layer_gdf[field],
         errors="coerce",
     )
 
-    # Preserve the significance classification as text
-    layer_gdf[significance_field] = (
-        layer_gdf[significance_field]
-        .astype("string")
-    )
-
-    # Rename the attributes for readable popups
+    # Rename fields for readable click popups
     layer_gdf = layer_gdf.rename(
         columns=friendly_labels
     )
 
-    display_field = friendly_labels[field]
+    display_sign = friendly_labels[sign_field]
 
     def style_function(
         feature,
-        display_field=display_field,
+        display_sign=display_sign,
         opacity=fill_opacity,
     ):
-        value = feature["properties"].get(
-            display_field
+        # Classification determines the polygon colour
+        sign_value = feature["properties"].get(
+            display_sign
         )
 
-        try:
-            value = float(value)
-        except (TypeError, ValueError):
-            value = None
-
-        if value is None or pd.isna(value):
-            fill_colour = "#D9D9D9"
-        else:
-            fill_colour = correlation_colour(value)
+        category = classify_correlation(sign_value)
+        fill_colour = SIGN_COLOURS[category]
 
         return {
             "fillColor": fill_colour,
             "color": "#555555",
             "weight": 1,
             "fillOpacity": opacity,
-            "opacity": 0.8,
+            "opacity": 0.9,
         }
 
     m.add_gdf(
@@ -336,70 +345,65 @@ for layer in layers:
     )
 
 
-# --------------------------------------------------
-# DISPLAY MAP
-# --------------------------------------------------
+# ==================================================
+# 11. DISPLAY THE MAP
+# ==================================================
 
-st.subheader("Explore socioeconomic correlations")
+st.subheader("Explore correlations across Greater Sydney")
 
 m.to_streamlit(height=700)
 
 st.caption(
-    "Toggle layers using the map's layer control. "
-    "Click an LGA polygon to view its correlation "
-    "coefficient and significance classification. "
-    "Grey polygons indicate missing correlation values."
+    "Toggle the three layers using the map's layer control. "
+    "Click an LGA polygon to view the corresponding numerical "
+    "correlation value and classification."
 )
 
 
-# --------------------------------------------------
-# LEGEND
-# --------------------------------------------------
+# ==================================================
+# 12. THREE-COLOUR LEGEND
+# ==================================================
 
-st.subheader("Correlation coefficient legend")
+st.subheader("Legend")
 
-legend_labels = [
-    "Strong negative",
-    "Moderate negative",
-    "Weak negative",
-    "Near zero",
-    "Weak positive",
-    "Moderate positive",
-    "Strong positive",
+legend_items = [
+    (SIGN_COLOURS["positive"], "Positive correlation"),
+    (SIGN_COLOURS["none"], "No correlation"),
+    (SIGN_COLOURS["negative"], "Negative correlation"),
 ]
 
-legend_columns = st.columns(7)
+legend_columns = st.columns(3)
 
-for i, column in enumerate(legend_columns):
-    with column:
+for i, (colour, label) in enumerate(legend_items):
+    with legend_columns[i]:
         st.markdown(
             f"""
             <div style="
-                background-color: {colours[i]};
-                height: 18px;
+                background-color: {colour};
+                height: 24px;
+                border: 1px solid #777777;
                 border-radius: 4px;
-                margin-bottom: 5px;
-                border: 1px solid #cccccc;
+                margin-bottom: 6px;
             "></div>
             <div style="
-                font-size: 11px;
+                font-size: 13px;
                 text-align: center;
-            ">{legend_labels[i]}</div>
+            ">{label}</div>
             """,
             unsafe_allow_html=True,
         )
 
 st.caption(
-    "Blue indicates negative correlations, white indicates "
-    "values near zero, and red indicates positive correlations. "
-    "Grey indicates missing data. Interpret the coefficient "
-    "according to the correlation method used in the analysis."
+    "Red represents positive correlation, white represents "
+    "no correlation, and blue represents negative correlation. "
+    "Grey indicates missing or unrecognised classification data. "
+    "Numerical values are available by clicking an LGA."
 )
 
 
-# --------------------------------------------------
-# STUDY METADATA
-# --------------------------------------------------
+# ==================================================
+# 13. STUDY METADATA
+# ==================================================
 
 st.divider()
 
@@ -414,17 +418,22 @@ with st.container(border=True):
     with meta_left:
         st.markdown(
             """
-            **Geographic coverage:** Selected Greater Sydney LGAs
+            **Study period:** January 2015 – December 2025
 
-            **Study period:** 2015–2025
+            **Coordinate system:** GDA2020 / MGA Zone 56
+            (EPSG:7856), reprojected to WGS84 (EPSG:4326)
+            for web mapping.
 
             **Mapped variables:** Drug offences, violent crime
-            and property offences
+            and property offences.
 
-            **Spatial unit:** Local Government Areas
+            **Spatial unit:** Selected Greater Sydney
+            Local Government Areas (LGAs).
 
-            **Data source:** LGA boundaries and the associated
-            socioeconomic and crime analysis dataset.
+            **Data source:** LGA boundaries, Australian Bureau
+            of Statistics; crime data, NSW Bureau of Crime
+            Statistics and Research; associated socioeconomic
+            and crime analysis dataset.
             """
         )
 
@@ -433,13 +442,21 @@ with st.container(border=True):
             """
             **Methodological notes:**
 
-            - Each layer maps its stored correlation coefficient.
-            - The significance classification is available
-              in the clicked polygon's attributes.
-            - Grey polygons indicate missing correlation values.
+            - Polygon colours are determined by the relevant
+              classification field: `sign_drug`, `sign_vc`
+              or `sign_po`.
+            - Numerical correlation values are stored in
+              `Drug_m`, `VC_m` and `PO_m` and are displayed
+              when a polygon is clicked.
+            - Grey polygons indicate missing or unrecognised
+              classification values.
             - Correlation does not establish causation.
-            - The interpretation of statistical significance
-              depends on the method and threshold used in
-              the underlying analysis.
+            - Interpretation depends on the methodology used
+              to calculate the underlying correlations.
             """
         )
+
+    st.caption(
+        "Map producer and data-processing details should be "
+        "updated to reflect the final dataset and analysis."
+    )
