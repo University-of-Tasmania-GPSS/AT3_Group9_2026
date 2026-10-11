@@ -19,7 +19,7 @@ I am a book about ... something! Wikipedia has [information about books](wiki:bo
 
 % An admonition containing a note
 :::{note}
-Books are usually written on paper ... But Jupyter Book can create _websites_!
+Correlation does not nessesarily imply Causation. 
 :::
 
 If you sold 100 books at \$10 per book, you'd have \$1000 dollars according to [](#eq:book). If instead you publish your Jupyter Book to the web for free, you'd have \$0 dollars!
