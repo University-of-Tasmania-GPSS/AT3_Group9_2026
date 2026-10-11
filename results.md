@@ -1,5 +1,8 @@
 # Results
-## Spatial Correlation Results (Molly)
+
+## Spatial Correlation Results
+
+### Interactive map of crime counts and rates of Greater Sydney
 <iframe src="https://at3group92026-rq8a73wjsafwnd7mhl5y2k.streamlit.app/?embed=true&refresh=20261010" width="100%" height="800" style="border: none;" allow="clipboard-write"> </iframe>
 
 <div style="
@@ -12,11 +15,39 @@
 
 <strong>Key Insight</strong>
 
-Your text goes here. Use this box to highlight an important finding, explain a concept, or introduce a section.
+- Overall, crime counts tend to be lower in the northern LGAs, while higher counts are observed across southern and western LGAs. This spatial pattern is consistent across all three crime categories.
+
+- A similar pattern is evident in crime rates, with northern LGAs generally recording lower rates than those in the southern and western parts of the study area.
+- Sydney LGA presents the highest crime count for drug offences  
+- Blacktown LGA presents the highest crime count for violent crime and property offences, However, Sydney LGA presnts the highest crime rate for all crime types 
+
 
 </div>
 
-### Map 2
+### Interactive crime trends map of Greater Sydney 
+
+<iframe src="https://at3group92026-5rrjmp29vpltlljde6gjka.streamlit.app/?embed=true&refresh=20261010" width="100%" height="800" style="border: none;" allow="clipboard-write"> </iframe>
+
+
+<div style="
+    background-color: #e8f0ec;
+    border-left: 5px solid #183D32;
+    padding: 18px 22px;
+    border-radius: 8px;
+    margin: 20px 0;
+">
+
+<strong>Key Insight</strong>
+- Blacktown, Paramatta and Burwood all have increasing drug offences over time. All other LGA's have decreasing 
+drug offences or no correlation over time 
+- Majority of LGA's, except Sydney, Hunters Hill, Mosman and North Sydney, have increasing violent crime over time 
+- Majority of LGA's, except Strathfield, Camden, Parramatta, Ryde and Lane Cove, have decreasing property offences over time 
+
+</div>
+
+
+### Interactive crime hotspot map of Greater Sydney
+
 <iframe src="https://at3group92026-6tqnkabpc3aor2awnntgcy.streamlit.app/?embed=true&refresh=20261010" width="100%" height="800" style="border: none;" allow="clipboard-write"> </iframe>
 
 <div style="
@@ -28,28 +59,17 @@ Your text goes here. Use this box to highlight an important finding, explain a c
 ">
 
 <strong>Key Insight</strong>
+- Across all crime categories cold spots were identifyied on North Eastern LGA's. This includes Northern Beaches, Ku-ring-ga and Willoughby
+- No hotpsots were identified on the North Shore 
+- Woollahra was identified as a hotspot for all three crime types
+- Drug Offence hotspots were idenitified in Woollahra, Randwick and Bayside
+- Violent Crime hotspots were idenitified in Fairfield and Woollahra
+- Property Offence hotspots were identified in Randwick and Woollahra 
 
-Your text goes here. Use this box to highlight an important finding, explain a concept, or introduce a section.
-
-</div>
-
-### Map 3
-
-<div style="
-    background-color: #e8f0ec;
-    border-left: 5px solid #183D32;
-    padding: 18px 22px;
-    border-radius: 8px;
-    margin: 20px 0;
-">
-
-<strong>Key Insight</strong>
-
-Your text goes here. Use this box to highlight an important finding, explain a concept, or introduce a section.
 
 </div>
 
-# Socio Economic Correlation Results (Tara)
+# Socio Economic Correlation Results 
 Note: Some scatter plots in this section have a line of best fit. This is to highlight the direction of correlation.
 
 ### Graph 1: Example Data with Sydney LGA

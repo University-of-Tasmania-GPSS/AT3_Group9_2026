@@ -439,7 +439,7 @@ with st.container(border=True):
             Local Government Area boundaries (2025); NSW Bureau
             of Crime Statistics and Research recorded criminal
             incidents by month and LGA; socioeconomic data
-            from the supplied shapefile.
+            collated from the Australian Bureau of Statistics 2021 Census Data.
 
             **Data processing:** Data cleaning, crime trend
             value calculation and classification conducted by
