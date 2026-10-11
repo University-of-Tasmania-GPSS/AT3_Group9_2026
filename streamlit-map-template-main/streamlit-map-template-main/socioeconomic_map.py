@@ -249,12 +249,12 @@ m.add_child(
 
 friendly_labels = {
     "LGA_NAME25": "Local Government Area",
-    "Drug_m": "Drug offences — correlation value",
-    "VC_m": "Violent crime — correlation value",
-    "PO_m": "Property offences — correlation value",
-    "sign_drug": "Drug offences — trend classification",
-    "sign_vc": "Violent crime — trend classification",
-    "sign_po": "Property offences — trend classification",
+    "Drug_m": "Drug offences - gradient value",
+    "VC_m": "Violent crime - gradient value",
+    "PO_m": "Property offences - gradient value",
+    "sign_drug": "Drug offences - trend classification",
+    "sign_vc": "Violent crime - trend classification",
+    "sign_po": "Property offences - trend classification",
 }
 
 
@@ -341,9 +341,9 @@ st.caption(
 st.subheader("Legend")
 
 legend_items = [
-    (SIGN_COLOURS["positive"], "Positive correlation"),
-    (SIGN_COLOURS["none"], "No correlation"),
-    (SIGN_COLOURS["negative"], "Negative correlation"),
+    (SIGN_COLOURS["positive"], "Increasing over Time"),
+    (SIGN_COLOURS["none"], "No correlation over Time"),
+    (SIGN_COLOURS["negative"], "Decreasing correlation over Time"),
 ]
 
 legend_columns = st.columns(3)
@@ -368,8 +368,8 @@ for i, (colour, label) in enumerate(legend_items):
         )
 
 st.caption(
-    "Red represents positive correlation, white represents "
-    "no correlation, and blue represents negative correlation. "
+    "Red represents increasing gradient, white represents "
+    "no correlation, and blue represents decreasing gradient. "
     "Grey indicates missing or unrecognised classification data. "
     "Numerical values are available by clicking an LGA."
 )
@@ -392,24 +392,29 @@ with st.container(border=True):
     with meta_left:
         st.markdown(
             """
-            **Study period:** January 2015 – December 2025
+            **Study period:** January 2015 - December 2025
 
-            **Coordinate system:** GDA2020 / MGA Zone 56
-            (EPSG:7856), reprojected to WGS84 (EPSG:4326)
-            for web mapping.
+            **Coordinate System:** GDA2020 / MGA Zone 56 (EPSG:7856); reprojected to WGS84 (EPSG:4326) for web mapping.
+
+            **Study area:** Selected Greater Sydney Local Government Areas
+            
+            **Crime categories:** Drug offences, violent crime and property offences
 
             **Mapped variables:** Drug offences, violent crime
             and property offences.
+            
+            **Data Source:** LGA polygons, Australian Bureau of Statistics Local Government Area boundaries (2025). 
+            Crime data, NSW Bureau of Crime Statistics and Research, Recorded Criminal incidents by month by LGA. 
+            Socioeconomic data, Australian Bureau of Statistics, 2021. Data cleaning conducted by T. Powell, 2026. 
+            Gradient calculation and classification for each LGA conducted by T.Powell, 2026.
 
-            **Spatial unit:** Selected Greater Sydney
-            Local Government Areas (LGAs).
+            **Map Producer:** Molly Marshall, 2026
+                                            
+            **Date:** 11 October 2026
 
-            **Data source:** LGA boundaries, Australian Bureau
-            of Statistics; crime data, NSW Bureau of Crime
-            Statistics and Research; associated socioeconomic
-            and crime analysis dataset.
             """
         )
+        
 
     with meta_right:
         st.markdown(
@@ -430,7 +435,4 @@ with st.container(border=True):
             """
         )
 
-    st.caption(
-        "Map producer and data-processing details should be "
-        "updated to reflect the final dataset and analysis."
-    )
+   
