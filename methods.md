@@ -82,9 +82,6 @@ The following libaries were used during this project:
 
 ```python
 import geopandas as gpd
-import rasterio
-import xarray as xr
-import leafmap
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -105,33 +102,7 @@ The workflow involved:
 
 The resulting spatial dataset provided a consistent geographic framework for mapping crime, calculating rates, identifying hotspots and examining socioeconomic associations.
 
-````
-
-````{dropdown} Socioeconomic Statistical Analysis
-The socioeconomic analysis investigated associations between crime and three indicators: educational attainment, household income and unemployment.
-
-**Socioeconomic indicators**
-
-- **Education:** Highest year of school completion, sourced from 2021 Census Table G01.
-- **Household income:** Median total weekly household income, sourced from 2021 Census Table G02.
-- **Unemployment:** Selected labour force statistics, sourced from 2021 Census Table G43.
-
-**Analytical approach**
-
-The socioeconomic indicators were compared with drug offences, violent crime and property offences to investigate potential relationships between socioeconomic conditions and crime.
-
-The analysis considered:
-1. Relationships between socioeconomic characteristics and crime 
-2. Relationships between time and crime across individual LGAs. 
-
-The socioeconomic variables represent conditions recorded at the 2021 Census, while crime data span 2015–2025. Therefore, the results should be interpreted as associations rather than evidence of causation. The temporal difference between datasets is also an important limitation.
-
-*Note: GET TARA TO EXPLAIN HER ANALYSIS.*
-````
-
-````{dropdown} Spatial Hotspot Statistical Analysis
 **Crime counts and rates**
-
 Total recorded incidents were calculated for each LGA and crime category across 2015–2025.
 
 Crime rates were calculated using:
