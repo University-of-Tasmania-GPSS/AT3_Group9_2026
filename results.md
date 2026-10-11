@@ -151,17 +151,7 @@ This graph displays a relationship with moderate correlation (r = 0.40). This da
 | Unemployment (%) | 0.54 | 0.44 | 0.40 |
 | Year 12 Completion (%) | -0.74 | -0.41 | Not Statistically Significant |
 
-<div style="
-    background-color: #e8f0ec;
-    border-left: 5px solid #183D32;
-    padding: 18px 22px;
-    border-radius: 8px;
-    margin: 10px 0 40px;
-">
 
-TARA PUT SOME STUFF IN ABOUT THESE TABLES!!!!
-
-</div>
 
 # Time Correlation Results (Tara)
 
@@ -200,65 +190,24 @@ TARA PUT SOME STUFF IN ABOUT THESE TABLES!!!!
 | Willoughby | Not significant | 0 | 0.91 | 0.24 | -0.79 | -0.82 |
 | Woollahra | -0.61 | -0.34 | 0.91 | 0.30 | -0.82 | -0.76 |
 ````
-<div style="
-    background-color: #e8f0ec;
-    border-left: 5px solid #183D32;
-    padding: 18px 22px;
-    border-radius: 8px;
-    margin: 10px 0 40px;
-">
 
-TARA PUT SOME STUFF IN ABOUT THESE TABLES!!!!
-
-</div>
 
 ### Graph 4: Example Data of Strong Positive Correlation (Increase over Time)
 :::{figure} paramatta.png
 :::
 
-<div style="
-    background-color: #e8f0ec;
-    border-left: 5px solid #183D32;
-    padding: 18px 22px;
-    border-radius: 8px;
-    margin: 10px 0 40px;
-">
 
-WRTIE STUFF HERE!!!!
-
-</div>
 
 ### Graph 5: Example Data of Strong Negative Correlation (Decrease over Time)
 :::{figure} NorthernBeaches.png
 :::
 
-<div style="
-    background-color: #e8f0ec;
-    border-left: 5px solid #183D32;
-    padding: 18px 22px;
-    border-radius: 8px;
-    margin: 10px 0 40px;
-">
-
-WRTIE STUFF HERE!!!!
-
-</div>
 
 ### Graph 6: Example Data of No Correlation:
 :::{figure} Will.png
 :::
 
-<div style="
-    background-color: #e8f0ec;
-    border-left: 5px solid #183D32;
-    padding: 18px 22px;
-    border-radius: 8px;
-    margin: 10px 0 40px;
-">
 
-WRTIE STUFF HERE!!!!
-
-</div>
 
 % Leave at the bottom
 <div style="border-top: 1px solid #cccccc; margin-top: 35px; padding-top: 12px; font-size: 0.9em; color: #666;">
