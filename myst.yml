@@ -7,7 +7,7 @@ project:
   toc:
     - file: index.md
 
-    - title: Patterns of Crime in Greater Sydney
+    - title: Overview of Crime Patternsin Greater Sydney
       children:
         - file: methods.md
         - file: results.md
