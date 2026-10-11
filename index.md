@@ -37,6 +37,12 @@
 
 </div>
 
+### Content Warning:
+Whilst nothing is explicitly described, this project discusses, explores and names a wide range of criminal offences. Many of these offences (particually those classified under Violent Crime) are confronting and may be upsetting for some readers/viewers. 
+
+If you have experienced violence or sexual assault and need immediate or ongoing help, contact 1800 RESPECT (1800 737 732) to talk to a counsellor from the national sexual assault and domestic violence hotline. For confidential support and information, contact Safe Steps’ 24/7 family violence response line on 1800 015 188.
+
+If you have concerns about your safety or that of someone else, please contact the police in your state or territory, or call Triple Zero (000) for emergency help.
 
 
 ### Why Map Crime?
