@@ -13,6 +13,7 @@ project:
         - file: results.md
         - file: discussion.md
         - file: conclusion.md
+        - file: references.md
   # description:
   # keywords: []
   # authors: []
