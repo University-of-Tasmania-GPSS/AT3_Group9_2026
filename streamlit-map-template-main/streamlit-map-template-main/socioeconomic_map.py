@@ -110,13 +110,13 @@ layers = [
     {
         "name": "Violent crime — correlation",
         "field": "VC_m",
-        "significance": "sign_VC",
+        "significance": "sign_vc",
         "colour": "#43956B",
     },
     {
         "name": "Property offences — correlation",
         "field": "PO_m",
-        "significance": "sign_PO",
+        "significance": "sign_po",
         "colour": "#8E63A9",
     },
 ]
