@@ -141,7 +141,7 @@ Pearson's correlation coeffcient was calculated for each crime type (rate per 10
 
 **Time Correlation Analysis**
 
-The changes in crime rate over time (each year from 2015-2025) were plotted and then had a correlation coefficent calculated to see if there was a statistically signifigant relationship over time. **CODE** was used to perform a least squares analysis on the dataset to determine a linear (first order) line of best fit for the dataset. The slope value of this line of best fit was used to quantify the rate of change over time. LGAs which did not have a statistically signifigant change in crime rate over time were given a rate of change over time value of 0. 
+The changes in crime rate over time (each year from 2015-2025) were plotted and then had a correlation coefficent calculated to see if there was a statistically signifigant relationship over time. scipy was used to perform a least squares analysis on the dataset to determine a linear (first order) line of best fit for the dataset. The slope value of this line of best fit was used to quantify the rate of change over time. LGAs which did not have a statistically signifigant change in crime rate over time were given a rate of change over time value of 0. 
 
 
 ````
