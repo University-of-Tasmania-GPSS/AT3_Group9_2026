@@ -131,8 +131,8 @@ required_fields = [
     "VC_m",
     "PO_m",
     "sign_drug",
-    "sign_VC",
-    "sign_PO",
+    "sign_vc",
+    "sign_po",
 ]
 
 missing_fields = [
@@ -258,8 +258,8 @@ friendly_labels = {
     "VC_m": "Violent crime - correlation value",
     "PO_m": "Property offences - correlation value",
     "sign_drug": "Drug offences - trend classification",
-    "sign_VC": "Violent crime - trend classification",
-    "sign_PO": "Property offences - trend classification",
+    "sign_vc": "Violent crime - trend classification",
+    "sign_po": "Property offences - trend classification",
 }
 
 
