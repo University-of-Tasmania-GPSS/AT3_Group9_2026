@@ -4,7 +4,11 @@
 
 
 ### Locality Map
-MOLLY MAKE A LOCALITY MAPPPPP!!!!!
+:::{figure} Locality Map.jpg
+:label: fig:Map of LGA's in the Greater Sydney Area that were used in the project 
+
+A photograph of some beautiful mountains to look at whilst reading.
+:::
 
 Three primary datasets were used to investigate the spatial and socioeconomic distribution of crime across selected Local Government Areas (LGAs) in Greater Sydney between January 2015 and December 2025. Crime incident data were obtained from the NSW Bureau of Crime Statistics and Research (BOCSAR), LGA boundary data from the Australian Bureau of Statistics (ABS), and socioeconomic indicators from the 2021 Australian Census.
 
@@ -59,9 +63,9 @@ Three primary datasets were used in this study:
 
 | Dataset | Source | Purpose |
 |---|---|---|
-| Local Government Area boundaries (2025) | Australian Bureau of Statistics (ABS) | Provided polygon geometries and geographic identifiers for the 30 selected LGAs. |
+| Local Government Areas (2025) | Australian Bureau of Statistics (ABS) | Provided polygon geometries and geographic identifiers for the 30 selected LGAs. |
 | Recorded Criminal Incidents by Month by LGA | NSW Bureau of Crime Statistics and Research (BOCSAR) | Provided monthly recorded crime counts for 2015–2025. |
-| 2021 Census General Community Profile | Australian Bureau of Statistics (ABS) | Provided socioeconomic indicators for education, household income and labour force characteristics. |
+| 2021 Census General Community Profile G01, G02 & G43 | Australian Bureau of Statistics (ABS) | Provided socioeconomic indicators for education, household income and labour force characteristics. |
 
 **Crime classification**
 
@@ -73,7 +77,22 @@ Recorded offences were grouped into three categories:
 
 **Data preparation**
 
-Python was used to clean and integrate the datasets. The workflow involved:
+Python was used to clean and integrate the datasets and perform the statsitical analysis. Streamlit was used to host the webmaps as an app and Jupyter Book to display present the porject. 
+
+The following libaries were used during this project:
+
+```python
+import geopandas as gpd
+import rasterio
+import xarray as xr
+import leafmap
+import pandas as pd
+import numpy as np
+from pathlib import Path
+```
+
+
+The workflow involved:
 
 1. Selecting the 30 study-area LGAs using their geographic identifiers.
 2. Filtering crime records to the selected LGAs and relevant offence categories.
@@ -106,7 +125,7 @@ The analysis considered:
 
 The socioeconomic variables represent conditions recorded at the 2021 Census, while crime data span 2015–2025. Therefore, the results should be interpreted as associations rather than evidence of causation. The temporal difference between datasets is also an important limitation.
 
-*Note: Specify the correlation coefficient and any significance tests used once the statistical methods and results have been finalised.*
+*Note: GET TARA TO EXPLAIN HER ANALYSIS.*
 ````
 
 ````{dropdown} Spatial Hotspot Statistical Analysis
@@ -145,8 +164,9 @@ The analysis produced thematic maps of crime counts, crime rates and hotspot cla
 ````
 
 
-
-
+<div style="border-top: 1px solid #cccccc; margin-top: 35px; padding-top: 12px; font-size: 0.9em; color: #666;">
+  GIS Project | Greater Sydney, New South Wales | 2015–2025
+</div>
 
 
 
