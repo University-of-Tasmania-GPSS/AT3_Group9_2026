@@ -50,7 +50,22 @@ Your text goes here. Use this box to highlight an important finding, explain a c
 </div>
 
 # Socio Economic Correlation Results (Tara)
-### Graph 1
+
+
+### Table 1: Pearson's Correlation Coefficients between Socioeconomic Factors and Crime Types
+| Socioeconomic Factor | Violent Crime | Property Offences | Drug Offences |
+|:---|:---:|:---:|:---:|
+| Median Weekly Income ($) | -0.51 | -0.37 | Not Statistically Significant |
+| Unemployment (%) | 0.44 | 0.36 | Not Statistically Significant |
+| Year 12 Completion (%) | -0.44 | Not Statistically Significant | Not Statistically Significant |
+
+
+### Table 2: Pearson's Correlation Coefficients between Socioeconomic Factors and Crime Types (Sydney LGA Removed)
+| Socioeconomic Factor | Violent Crime | Property Offences | Drug Offences |
+|:---|:---:|:---:|:---:|
+| Median Weekly Income ($) | -0.67 | -0.48 | -0.41 |
+| Unemployment (%) | 0.54 | 0.44 | 0.40 |
+| Year 12 Completion (%) | -0.74 | -0.41 | Not Statistically Significant |
 
 <div style="
     background-color: #e8f0ec;

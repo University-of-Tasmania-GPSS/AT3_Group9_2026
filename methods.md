@@ -7,7 +7,6 @@
 :::{figure} Locality Map.jpg
 :label: fig:Map of LGA's in the Greater Sydney Area that were used in the project 
 
-A photograph of some beautiful mountains to look at whilst reading.
 :::
 
 Three primary datasets were used to investigate the spatial and socioeconomic distribution of crime across selected Local Government Areas (LGAs) in Greater Sydney between January 2015 and December 2025. Crime incident data were obtained from the NSW Bureau of Crime Statistics and Research (BOCSAR), LGA boundary data from the Australian Bureau of Statistics (ABS), and socioeconomic indicators from the 2021 Australian Census.
@@ -89,6 +88,8 @@ import leafmap
 import pandas as pd
 import numpy as np
 from pathlib import Path
+import matplotlib.pyplot as plot
+from scipy import stats
 ```
 
 
@@ -103,32 +104,7 @@ The workflow involved:
 7. Checking for missing values, inconsistent identifiers and invalid geometries.
 
 The resulting spatial dataset provided a consistent geographic framework for mapping crime, calculating rates, identifying hotspots and examining socioeconomic associations.
-````
 
-````{dropdown} Socioeconomic Statistical Analysis
-The socioeconomic analysis investigated associations between crime and three indicators: educational attainment, household income and unemployment.
-
-**Socioeconomic indicators**
-
-- **Education:** Highest year of school completion, sourced from 2021 Census Table G01.
-- **Household income:** Median total weekly household income, sourced from 2021 Census Table G02.
-- **Unemployment:** Selected labour force statistics, sourced from 2021 Census Table G43.
-
-**Analytical approach**
-
-The socioeconomic indicators were compared with drug offences, violent crime and property offences to investigate potential relationships between socioeconomic conditions and crime.
-
-The analysis considered:
-1. Overall associations between the socioeconomic indicators and the three crime categories.
-2. Relationships between socioeconomic characteristics and crime across individual LGAs.
-3. Patterns that could be explored further through maps and graphs.
-
-The socioeconomic variables represent conditions recorded at the 2021 Census, while crime data span 2015–2025. Therefore, the results should be interpreted as associations rather than evidence of causation. The temporal difference between datasets is also an important limitation.
-
-*Note: GET TARA TO EXPLAIN HER ANALYSIS.*
-````
-
-````{dropdown} Spatial Hotspot Statistical Analysis
 **Crime counts and rates**
 
 Total recorded incidents were calculated for each LGA and crime category across 2015–2025.
@@ -144,6 +120,37 @@ $$
 
 This standardised measure expresses recorded incidents per 1,000 residents. The population denominator used in the analysis should be specified in the final methodology.
 
+````
+
+````{dropdown} Socioeconomic Statistical Analysis
+The socioeconomic analysis investigated associations between crime and four indicators: time, year 12 completion in the adult population, household income and unemployment.
+
+**Socioeconomic indicators**
+
+- **Education:** Highest year of school completion, sourced from 2021 Census Table G01.
+- **Household income:** Median total weekly household income, sourced from 2021 Census Table G02.
+- **Unemployment:** Selected labour force statistics, sourced from 2021 Census Table G43.
+
+**Analytical approach**
+
+The socioeconomic indicators were compared with drug offences, violent crime and property offences to investigate potential relationships between socioeconomic conditions and crime. The socioeconomic variables represent conditions recorded at the 2021 Census, while crime data span 2015–2025. Pearson's correlation coefficient is a value between -1 and 1 which quantifies how linear the relationship between 2 variables is. The signifigance threshold was a p value of 0.05. Pearson's correlation coefficent represents assosiations between datasets, not nessesarily causation. 
+
+The analysis considered:
+1. Relationships between socioeconomic characteristics and crime the whole of greater Sydney.
+2. The change in crime rates over time in each individual LGA
+
+**Socioeconomic Correlation Analysis**
+
+Pearson's correlation coeffcient was calculated for each crime type (rate per 1000 people for each LGA) and each socioeconomic variable (for each LGA) resulting in r and p values.  
+
+**Time Correlation Analysis**
+
+The changes in crime rate over time (each year from 2015-2025) were plotted and then had a correlation coefficent calculated to see if there was a statistically signifigant relationship over time. **CODE** was used to perform a least squares analysis on the dataset to determine a linear (first order) line of best fit for the dataset. The slope value of this line of best fit was used to quantify the rate of change over time. LGAs which did not have a statistically signifigant change in crime rate over time were given a rate of change over time value of 0. 
+
+
+````
+
+````{dropdown} Spatial Hotspot Statistical Analysis
 **Getis–Ord Gi* hotspot analysis**
 
 Local Getis–Ord Gi* statistics were calculated to identify spatial clusters of high and low crime-rate values across neighbouring LGAs.
