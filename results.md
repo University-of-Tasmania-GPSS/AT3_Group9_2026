@@ -51,6 +51,24 @@ Your text goes here. Use this box to highlight an important finding, explain a c
 
 # Socio Economic Correlation Results (Tara)
 
+:::{figure} HighvsPO(SYD).png
+:label: fig:Map of LGA's in the Greater Sydney Area that were used in the project 
+
+:::
+
+<div style="
+    background-color: #e8f0ec;
+    border-left: 5px solid #183D32;
+    padding: 18px 22px;
+    border-radius: 8px;
+    margin: 20px 0;
+">
+
+<strong>Key Insight</strong>
+
+This graph displays the relationship between property offences and year 12 completion. Sydney (labelled) stands out as an obvious outlier. This relationship with sydney being an outlier due to its high crime rate occurs across all crime times. As such the following graphs will not include sydney (see discussion for reasoning).
+
+</div>
 
 ### Table 1: Pearson's Correlation Coefficients between Socioeconomic Factors and Crime Types
 | Socioeconomic Factor | Violent Crime | Property Offences | Drug Offences |
@@ -66,20 +84,6 @@ Your text goes here. Use this box to highlight an important finding, explain a c
 | Median Weekly Income ($) | -0.67 | -0.48 | -0.41 |
 | Unemployment (%) | 0.54 | 0.44 | 0.40 |
 | Year 12 Completion (%) | -0.74 | -0.41 | Not Statistically Significant |
-
-<div style="
-    background-color: #e8f0ec;
-    border-left: 5px solid #183D32;
-    padding: 18px 22px;
-    border-radius: 8px;
-    margin: 20px 0;
-">
-
-<strong>Key Insight</strong>
-
-Your text goes here. Use this box to highlight an important finding, explain a concept, or introduce a section.
-
-</div>
 
 ### Graph 2
 
