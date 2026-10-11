@@ -7,7 +7,6 @@
 :::{figure} Locality Map.jpg
 :label: fig:Map of LGA's in the Greater Sydney Area that were used in the project 
 
-A photograph of some beautiful mountains to look at whilst reading.
 :::
 
 Three primary datasets were used to investigate the spatial and socioeconomic distribution of crime across selected Local Government Areas (LGAs) in Greater Sydney between January 2015 and December 2025. Crime incident data were obtained from the NSW Bureau of Crime Statistics and Research (BOCSAR), LGA boundary data from the Australian Bureau of Statistics (ABS), and socioeconomic indicators from the 2021 Australian Census.

@@ -52,6 +52,11 @@ Your text goes here. Use this box to highlight an important finding, explain a c
 # Socio Economic Correlation Results (Tara)
 ### Graph 1
 
+:::{figure} ExampleGraph.jpg
+:label: fig:Map of LGA's in the Greater Sydney Area that were used in the project 
+
+:::
+
 <div style="
     background-color: #e8f0ec;
     border-left: 5px solid #183D32;
