@@ -199,50 +199,24 @@ SIGN_COLOURS = {
 
 
 def classify_correlation(value):
-    """
-    Convert a classification value into one of the three
-    correlation categories.
-
-    Adjust this function if the shapefile uses different
-    category labels or numeric codes.
-    """
+    """Match the exact trend labels stored in the shapefile."""
 
     if value is None or pd.isna(value):
         return "missing"
 
     value = str(value).strip().lower()
 
-    # Positive correlation
-    if (
-        "positive" in value
-        or value in {"+", "+1", "1", "1.0"}
-    ):
+    if value == "increasing over time":
         return "positive"
 
-    # Negative correlation
-    if (
-        "negative" in value
-        or value in {"-", "-1", "-1.0"}
-    ):
+    elif value == "decreasing over time":
         return "negative"
 
-    # No correlation
-    if (
-        "no correlation" in value
-        or "no association" in value
-        or "uncorrelated" in value
-        or value in {
-            "0",
-            "0.0",
-            "none",
-            "neutral",
-        }
-    ):
+    elif value == "no correlation over time":
         return "none"
 
-    # Do not silently assign an unknown classification
-    # to a correlation category.
-    return "missing"
+    else:
+        return "missing"
 
 
 # ==================================================
