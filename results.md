@@ -2,7 +2,7 @@
 
 ## Spatial Correlation Results
 
-### Interactive map of crime counts and rates of Greater Sydney
+### Map 1: Interactive map of crime counts and rates of Greater Sydney
 <iframe src="https://at3group92026-rq8a73wjsafwnd7mhl5y2k.streamlit.app/?embed=true&refresh=20261010" width="100%" height="800" style="border: none;" allow="clipboard-write"> </iframe>
 
 <div style="
@@ -13,6 +13,8 @@
     margin: 20px 0;
 ">
 
+**Map Highlights**
+
 - Overall, crime counts tend to be lower in the northern LGAs, while higher counts are observed across southern and western LGAs. This spatial pattern is consistent across all three crime categories.
 
 - A similar pattern is evident in crime rates, with northern LGAs generally recording lower rates than those in the southern and western parts of the study area.
@@ -22,7 +24,7 @@
 
 </div>
 
-### Interactive crime trends map of Greater Sydney 
+### Map 2: Interactive crime trends map of Greater Sydney 
 
 <iframe src="https://at3group92026-5rrjmp29vpltlljde6gjka.streamlit.app/?embed=true&refresh=20261010" width="100%" height="800" style="border: none;" allow="clipboard-write"> </iframe>
 
@@ -35,6 +37,8 @@
     margin: 20px 0;
 ">
 
+**Map Highlights**
+
 - Blacktown, Paramatta and Burwood all have increasing drug offences over time. All other LGA's have decreasing 
 drug offences or no correlation over time 
 - Majority of LGA's, except Sydney, Hunters Hill, Mosman and North Sydney, have increasing violent crime over time 
@@ -43,9 +47,10 @@ drug offences or no correlation over time
 </div>
 
 
-### Interactive crime hotspot map of Greater Sydney
+### Map 3: Interactive crime hotspot map of Greater Sydney
 
 <iframe src="https://at3group92026-6tqnkabpc3aor2awnntgcy.streamlit.app/?embed=true&refresh=20261010" width="100%" height="800" style="border: none;" allow="clipboard-write"> </iframe>
+
 
 <div style="
     background-color: #e8f0ec;
@@ -55,6 +60,8 @@ drug offences or no correlation over time
     margin: 20px 0;
 ">
 
+**Map Highlights**
+
 - Across all crime categories cold spots were identifyied on North Eastern LGA's. This includes Northern Beaches, Ku-ring-ga and Willoughby
 - No hotpsots were identified on the North Shore 
 - Woollahra was identified as a hotspot for all three crime types
@@ -63,10 +70,9 @@ drug offences or no correlation over time
 - Property Offence hotspots were identified in Randwick and Woollahra 
 </div>
 
-### 
 
-### Table 1: Global Global Getis–Ord G Results 
-::: {table} Overall spatial concentration of crime rates across the whole study area (30 LGAs), note this is not identifying individual hotspots
+### Table 1: Global Getis–Ord G Results 
+Overall spatial concentration of crime rates across the whole study area (30 LGAs), note this is not identifying individual hotspots
 
 | Crime category | Observed G | Expected G | Z-score | p-value | Statistically significant (p < 0.05) |
 |---|---:|---:|---:|---:|:---:|
@@ -81,6 +87,7 @@ drug offences or no correlation over time
     border-radius: 8px;
     margin: 20px 0;
 ">
+
 - Drug offences: The Global Getis–Ord G statistic was statistically significant (G=0.1707, p=0.0401). The observed value exceeded the expected value, indicating evidence of an overall spatial concentration of high drug-offence rates.
 
 - Violent crime: Violent crime showed the strongest statistical evidence of spatial concentration (G=0.1580, Z=2.2041, p=0.0138). The result suggests that violent crime rates were more spatially concentrated than expected under spatial randomness.

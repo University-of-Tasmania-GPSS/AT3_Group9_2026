@@ -281,6 +281,8 @@ import geopandas as gpd
 import pandas as pd
 from pathlib import Path
 import matplotlib.pyplot as plot
+
+Graphs were used to examine relationships between crime rates and socioeconomic indicators, including household income, unemployment and high-school completion. Additional time-series graphs illustrated changes in crime rates between 2015 and 2025, allowing comparisons between LGAs and investigation of trends within selected areas.
 ```
 
 ````
