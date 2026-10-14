@@ -7,9 +7,7 @@ from pathlib import Path
 from folium.plugins import MeasureControl
 
 
-# ==================================================
 # 1. PAGE CONFIGURATION
-# ==================================================
 
 st.set_page_config(
     page_title="Sydney Crime Trends Map",
@@ -18,9 +16,7 @@ st.set_page_config(
 )
 
 
-# ==================================================
 # 2. PAGE HEADER
-# ==================================================
 
 st.markdown(
     """
@@ -60,9 +56,7 @@ st.markdown(
 )
 
 
-# ==================================================
 # 3. LOAD SHAPEFILE
-# ==================================================
 
 project_folder = Path(__file__).resolve().parents[1]
 data_folder = project_folder / "data"
@@ -94,9 +88,7 @@ except Exception as e:
     st.stop()
 
 
-# ==================================================
 # 4. DEFINE THE THREE MAP LAYERS
-# ==================================================
 
 layers = [
     {
@@ -116,10 +108,7 @@ layers = [
     },
 ]
 
-
-# ==================================================
 # 5. CHECK REQUIRED COLUMNS
-# ==================================================
 
 required_fields = [
     "LGA_NAME25",
@@ -154,9 +143,7 @@ if missing_fields:
     st.stop()
 
 
-# ==================================================
 # 6. MAP INTRODUCTION AND OPACITY SLIDER
-# ==================================================
 
 st.subheader("Interactive crime trends map")
 
@@ -189,9 +176,7 @@ with opacity_column:
 fill_opacity = transparency / 100
 
 
-# ==================================================
 # 7. DEFINE COLOURS AND CLASSIFICATIONS
-# ==================================================
 
 SIGN_COLOURS = {
     "increasing": "#D73027",       # Red
@@ -222,9 +207,7 @@ def classify_trend(value):
         return "missing"
 
 
-# ==================================================
 # 8. CREATE THE MAP
-# ==================================================
 
 m = leafmap.Map(
     center=(-33.87, 151.21),
@@ -246,9 +229,7 @@ m.add_child(
 )
 
 
-# ==================================================
 # 9. FRIENDLY LABELS FOR CLICK POPUPS
-# ==================================================
 
 friendly_labels = {
     "LGA_NAME25": "Local Government Area",
@@ -270,9 +251,8 @@ friendly_labels = {
 }
 
 
-# ==================================================
 # 10. ADD THE THREE TOGGLEABLE LAYERS
-# ==================================================
+
 
 for layer in layers:
 
@@ -345,9 +325,8 @@ for layer in layers:
     )
 
 
-# ==================================================
 # 11. DISPLAY THE MAP
-# ==================================================
+
 
 st.subheader("Explore crime trends across Greater Sydney")
 
@@ -361,9 +340,8 @@ st.caption(
 )
 
 
-# ==================================================
 # 12. THREE-COLOUR LEGEND
-# ==================================================
+
 
 st.subheader("Legend")
 
@@ -402,9 +380,7 @@ st.caption(
 )
 
 
-# ==================================================
 # 13. STUDY METADATA
-# ==================================================
 
 st.divider()
 

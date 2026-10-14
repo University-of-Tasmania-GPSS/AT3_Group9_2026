@@ -13,8 +13,6 @@
     margin: 20px 0;
 ">
 
-<strong>Key Insight</strong>
-
 - Overall, crime counts tend to be lower in the northern LGAs, while higher counts are observed across southern and western LGAs. This spatial pattern is consistent across all three crime categories.
 
 - A similar pattern is evident in crime rates, with northern LGAs generally recording lower rates than those in the southern and western parts of the study area.
@@ -37,7 +35,6 @@
     margin: 20px 0;
 ">
 
-<strong>Key Insight</strong>
 - Blacktown, Paramatta and Burwood all have increasing drug offences over time. All other LGA's have decreasing 
 drug offences or no correlation over time 
 - Majority of LGA's, except Sydney, Hunters Hill, Mosman and North Sydney, have increasing violent crime over time 
@@ -58,16 +55,40 @@ drug offences or no correlation over time
     margin: 20px 0;
 ">
 
-<strong>Key Insight</strong>
 - Across all crime categories cold spots were identifyied on North Eastern LGA's. This includes Northern Beaches, Ku-ring-ga and Willoughby
 - No hotpsots were identified on the North Shore 
 - Woollahra was identified as a hotspot for all three crime types
 - Drug Offence hotspots were idenitified in Woollahra, Randwick and Bayside
 - Violent Crime hotspots were idenitified in Fairfield and Woollahra
 - Property Offence hotspots were identified in Randwick and Woollahra 
-
-
 </div>
+
+### 
+
+### Table 1: Global Global Getis–Ord G Results 
+::: {table} Overall spatial concentration of crime rates across the whole study area (30 LGAs), note this is not identifying individual hotspots
+
+| Crime category | Observed G | Expected G | Z-score | p-value | Statistically significant (p < 0.05) |
+|---|---:|---:|---:|---:|:---:|
+| Drug offences | 0.1707 | 0.1310 | 1.7492 | 0.0401 | Yes |
+| Violent crime | 0.1580 | 0.1310 | 2.2041 | 0.0138 | Yes |
+| Property offences | 0.1433 | 0.1310 | 1.3328 | 0.0913 | No |
+
+<div style="
+    background-color: #e8f0ec;
+    border-left: 5px solid #183D32;
+    padding: 18px 22px;
+    border-radius: 8px;
+    margin: 20px 0;
+">
+- Drug offences: The Global Getis–Ord G statistic was statistically significant (G=0.1707, p=0.0401). The observed value exceeded the expected value, indicating evidence of an overall spatial concentration of high drug-offence rates.
+
+- Violent crime: Violent crime showed the strongest statistical evidence of spatial concentration (G=0.1580, Z=2.2041, p=0.0138). The result suggests that violent crime rates were more spatially concentrated than expected under spatial randomness.
+
+- Property offences: The result was not statistically significant (G=0.1433, p=0.0913). Although the observed statistic exceeded the expected value, there was insufficient evidence at the 0.05 significance level to conclude that property-offence rates displayed significant overall spatial concentration.
+</div>
+
+
 
 # Socio Economic Correlation Results 
 Note: Some scatter plots in this section have a line of best fit. This is to highlight the direction of correlation.
@@ -153,7 +174,7 @@ This graph displays a relationship with moderate correlation (r = 0.40). This da
 
 
 
-# Time Correlation Results (Tara)
+# Time Correlation Results
 
 ````{dropdown} Table 3: Crime Rate and Time Correlation (with Gradients)
 
@@ -211,6 +232,6 @@ This graph displays a relationship with moderate correlation (r = 0.40). This da
 
 % Leave at the bottom
 <div style="border-top: 1px solid #cccccc; margin-top: 35px; padding-top: 12px; font-size: 0.9em; color: #666;">
-  GIS Project | Greater Sydney, New South Wales | 2015–2025
+  GIS Project | Greater Sydney, New South Wales | 2015–2025 | M. Marshall & T. Powell
 </div>
 

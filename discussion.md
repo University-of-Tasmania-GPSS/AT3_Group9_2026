@@ -29,6 +29,6 @@ Property Offences: On average a strong negative correlation, 24 out of 30 LGAs h
 
 % Leave at the bottom 
 <div style="border-top: 1px solid #cccccc; margin-top: 35px; padding-top: 12px; font-size: 0.9em; color: #666;">
-  GIS Project | Greater Sydney, New South Wales | 2015–2025
+  GIS Project | Greater Sydney, New South Wales | 2015–2025 | M. Marshall & T. Powell
 </div>
 
