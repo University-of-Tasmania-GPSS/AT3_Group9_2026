@@ -2,11 +2,11 @@
 
 ## Study Area and Research Design 
 
-The study area for this project is the Greater Sydney Region, New South Wales (NSW), Australia. This region was selected due to the availability of sufficient crime data and socioeconomic statistics to support spatial and statistical analysis. 30 LGAs across the Greater Sydney area were selected for the analysis and can be seen in Figure 1. The study examines crime patterns across Local Government Areas (LGAs) between 2015 and 2025, focusing on drug offences, violent crime and property offences. The analysis explores the spatial distribution of crime and its relationship with unemployment, median income and high-school completion rates.
+The study area for this project is the Greater Sydney Region, New South Wales (NSW), Australia, as seen in Figure 1. This region was selected due to the availability of sufficient crime data and socioeconomic statistics to support spatial and statistical analysis. 30 LGAs across the Greater Sydney area were selected for the analysis and can be seen in Figure 1. The study examines crime patterns across Local Government Areas (LGAs) between 2015 and 2025, focusing on drug offences, violent crime and property offences. The analysis explores the spatial distribution of crime and its relationship with unemployment, median income and high-school completion rates.
 
 ### Locality Map
 :::{figure} Locality Map.jpg
-:label: fig:
+:label: fig: local map
 
 Locality Map of the Local Government Areas (LGA) of Greater Sydney that were used in this project 
 
@@ -21,7 +21,7 @@ The datasets were cleaned, aggregated and integrated into a common spatial datas
 
 ## Methodological Workflow
 
-The following flowchart summarises the research
+The Figure 2 summarises the research
 workflow, from data collection and preparation
 through to spatial and socioeconomic analysis.
 
@@ -53,7 +53,7 @@ flowchart TD
 
 ```
 :::{figure}
-:label: fig:
+:label: fig: flowchart
 
 Flowchart of methodology used in this project 
 
