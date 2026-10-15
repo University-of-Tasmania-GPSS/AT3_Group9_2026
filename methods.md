@@ -52,6 +52,12 @@ flowchart TD
     class F socio
 
 ```
+:::{figure}
+:label: fig:
+
+Flowchart of methodology used in this project 
+
+:::
 
 ## Detailed Methodology
 
@@ -115,12 +121,12 @@ provided a consistent geographic framework for mapping crime, calculating rates,
 
 *Crime Counts*
 
-Total recorded incidents were calculated for each LGA and crime category across 2015–2025 by summing the annual recorded crime counts over the study period. These totals were used to compare the overall count and spatial distribution of drug offences, violent crime and property offences.
+Total recorded incidents were calculated for each LGA and crime category across 2015–2025 by summing the annual recorded crime counts over the study period. These totals were used to compare the overall count and spatial distribution of drug offences, violent crime and property offences. Python and Geopandas were used for this analysis.
 
 
 *Crime Rates*
 
-Crime rates were calculated to account for differences in population size between LGAs, allowing for more meaningful comparisons of crime levels across the study area. 
+Crime rates were calculated to account for differences in population size between LGAs, allowing for more meaningful comparisons of crime levels across the study area. Python and Geopandas were used for this analysis.
 
 $$ \text{Crime rate} = 
 \frac{\text{Total recorded incidents (2015–2025)}} 
@@ -139,7 +145,7 @@ contained both crime rate and counts for each LGA and was used for visualisation
 
 **Getis–Ord Gi* Hotspot Analysis**
 
-The Getis–Ord statistics were used to examine the spatial concentration of crime rates across the selected LGAs. The analysis included the Global Getis–Ord (G) statistic, which measures overall spatial concentration, and the Local Getis–Ord (G_i^*) statistic, which identifies individual LGAs forming clusters of high or low crime-rate values.
+The Getis–Ord statistics were used to examine the spatial concentration of crime rates across the selected LGAs. The analysis included the Global Getis–Ord (G) statistic, which measures overall spatial concentration, and the Local Getis–Ord (G_i^*) statistic, which identifies individual LGAs forming clusters of high or low crime-rate values (PySAL, 2018).
 
 The analysis was conducted in Python uisng PySAL. The following libaries were used during the hotpsot analysis:
 ```python
