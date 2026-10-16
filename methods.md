@@ -2,7 +2,7 @@
 
 ## Study Area and Research Design 
 
-The study area for this project is the Greater Sydney Region, New South Wales (NSW), Australia, as seen in Figure 1. This region was selected due to the availability of sufficient crime data and socioeconomic statistics to support spatial and statistical analysis. 30 LGAs across the Greater Sydney area were selected for the analysis and can be seen in Figure 1. The study examines crime patterns across Local Government Areas (LGAs) between 2015 and 2025, focusing on drug offences, violent crime and property offences. The analysis explores the spatial distribution of crime and its relationship with unemployment, median income and high-school completion rates.
+The study area for this project is the Greater Sydney Region, New South Wales (NSW), Australia, as seen in Figure 1. This region was selected due to the availability of sufficient crime data and socioeconomic statistics to support spatial and statistical analysis. 30 LGAs across the Greater Sydney area were selected for the analysis and can be seen in Figure 1. The study examines crime patterns across Local Government Areas (LGAs) between 2015 and 2025, focusing on drug offences, violent crime and property offences. The analysis explores the spatial distribution of crime and its relationship with unemployment, median income and year 12 high-school completion rates.
 
 ### Locality Map
 :::{figure} Locality Map.jpg
@@ -13,10 +13,9 @@ Locality Map of the Local Government Areas (LGA) of Greater Sydney that were use
 :::
 
 
-Three primary datasets were used to investigate the spatial and socioeconomic distribution of crime across selected Local Government Areas (LGAs) in Greater Sydney between January 2015 and December 2025. Crime incident data were obtained from the NSW Bureau of Crime Statistics and Research (BOCSAR), LGA boundary data from the Australian Bureau of Statistics (ABS), and socioeconomic indicators from the 2021 Australian Census.
+Three primary datasets were used to investigate the spatial and socioeconomic distribution of crime across selected Local Government Areas (LGAs) in Greater Sydney between January 2015 and December 2025. Crime incident data were obtained from the NSW Bureau of Crime Statistics and Research (BOCSAR), LGA boundary data from the Australian Bureau of Statistics (ABS), and socioeconomic indicators from the 2021 Australian Census, provided by the ABS.
 
-The datasets were cleaned, aggregated and integrated into a common spatial dataset to enable comparisons between crime patterns and socioeconomic characteristics. The following tables summarise the source data, file formats and their roles in the analysis.
-
+The datasets were cleaned, aggregated and integrated into a common spatial dataset to enable comparisons between crime patterns and socioeconomic characteristics. 
 
 
 ## Methodological Workflow
@@ -61,7 +60,7 @@ Flowchart of methodology used in this project
 
 ## Detailed Methodology
 
-The following sections provide further details of the data preparation, socioeconomic statistical analysis and spatial hotspot analysis. Expand each section to explore the methodology.
+The following sections provide further details of the data preparation, spatial analysis, socioeconomic statistical analysis and results visualisation. Expand each section to explore the methodology.
 
 % DATA COLLECTION AND PREPARATION
 ````{dropdown} Data Collection and Preparation
@@ -73,7 +72,7 @@ Three primary datasets were used in this study:
 | Dataset | Source | Purpose |
 |---|---|---|
 | Local Government Areas (2025) | Australian Bureau of Statistics (ABS) | Provided polygon geometries and geographic identifiers for the 30 selected LGAs. |
-| Recorded Criminal Incidents by Month by LGA | NSW Bureau of Crime Statistics and Research (BOCSAR) | Provided monthly recorded crime counts for 2015–2025. |
+| Recorded Criminal Incidents by Month by LGA | NSW Bureau of Crime Statistics and Research (BOCSAR) | Provided monthly recorded crime counts for 2015-2025. |
 | 2021 Census General Community Profile G01, G02 & G43 | Australian Bureau of Statistics (ABS) | Provided socioeconomic indicators for education, household income and labour force characteristics. |
 
 **Crime classification**
@@ -86,9 +85,7 @@ Recorded offences were grouped into three categories:
 
 **Data preparation**
 
-Python was used to clean and integrate the datasets. 
-
-The following libaries were used during this project:
+Python was used to clean and integrate the datasets. The following libaries were used during this project:
 
 ```python
 import geopandas as gpd
@@ -119,14 +116,14 @@ provided a consistent geographic framework for mapping crime, calculating rates,
 % SPATIAL ANALYSIS
 ````{dropdown} Spatial Analysis
 
-*Crime Counts*
+**Crime Counts**
 
-Total recorded incidents were calculated for each LGA and crime category across 2015–2025 by summing the annual recorded crime counts over the study period. These totals were used to compare the overall count and spatial distribution of drug offences, violent crime and property offences. Python and Geopandas were used for this analysis.
+Total recorded incidents were calculated for each LGA and crime category across 2015-2025 by summing the annual recorded crime counts over the study period. These totals were used to compare the overall count and spatial distribution of drug offences, violent crime and property offences. Python and Geopandas were used for this analysis.
 
 
-*Crime Rates*
+**Crime Rates**
 
-Crime rates were calculated to account for differences in population size between LGAs, allowing for more meaningful comparisons of crime levels across the study area. Python and Geopandas were used for this analysis.
+Crime rates were calculated to account for differences in population size between LGAs, allowing for more meaningful comparisons of crime levels across the study area. Python and Geopandas were used for this analysis. The following equation was used to calculate crime rates per 1,000 residents for each LGA:
 
 $$ \text{Crime rate} = 
 \frac{\text{Total recorded incidents (2015–2025)}} 
@@ -140,12 +137,11 @@ The resulting spatial dataset:
 ```python
 SydneyLGAs_SpatialCrimeAnalysis.shp
 ```
-contained both crime rate and counts for each LGA and was used for visualisation of these results.
+contained both crime rate and counts for each LGA and was used for the visualisation of these results.
 
+**Getis-Ord Gi\* Hotspot Analysis**
 
-**Getis–Ord Gi* Hotspot Analysis**
-
-The Getis–Ord statistics were used to examine the spatial concentration of crime rates across the selected LGAs. The analysis included the Global Getis–Ord (G) statistic, which measures overall spatial concentration, and the Local Getis–Ord (G_i^*) statistic, which identifies individual LGAs forming clusters of high or low crime-rate values (PySAL, 2018).
+The Getis-Ord statistics were used to examine the spatial concentration of crime rates across the selected LGAs. The analysis included the Global Getis–Ord (G) statistic, which measures overall spatial concentration, and the Local Getis–Ord (G_i^*) statistic, which identifies individual LGAs forming clusters of high or low crime-rate values (PySAL, 2018).
 
 The analysis was conducted in Python uisng PySAL. The following libaries were used during the hotpsot analysis:
 ```python
@@ -186,7 +182,7 @@ The resulting spatial dataset:
 ```python
 SydneyLGAs_GetisOrd.shp
 ```
-was used for visualisation of the hotspot results.
+was used for the visualisation of the hotspot results.
 ````
 
 
@@ -203,7 +199,7 @@ The socioeconomic analysis investigated associations between crime and four indi
 
 **Percentage Computation**
 
-High-school completion and unemployment percentages were calculated for each LGA using data from the 2021 Australian Census. High-school completion was calculated by dividing the number of people whose highest year of school completion was Year 12 or equivalent by the total population aged 20 years and over, then multiplying by 100. The population aged 20 years and over was calculated by summing the Census age groups from 20–24 years to 85 years and over.
+High-school completion and unemployment percentages were calculated for each LGA using data from the 2021 Australian Census. High-school completion was calculated by dividing the number of people whose highest year of school completion was Year 12 or equivalent by the total population aged 20 years and over, then multiplying by 100. The population aged 20 years and over was calculated by summing the Census age groups from 20-24 years to 85 years and over. Note that there is a small portion of the population who have the potnential to have finished year 12 or equivalent education, ages 17-19, that are not accounted for in the percentage computation. 
 
 $$
 \text{High-school completion (\%)} =

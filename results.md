@@ -2,6 +2,11 @@
 
 ## Spatial Correlation Results
 
+:::{note} Interactive Maps:
+Scroll on the interactive map panel to explore the contents. Legend and metadata information can be found below the map frame within the panel. The maps can be explored in fullscreen (recommended for better visualisation) by clicking the icon at the bottom of the map panel. 
+:::
+
+
 ### Map 1: Interactive map of crime counts and rates of Greater Sydney
 <iframe src="https://at3group92026-rq8a73wjsafwnd7mhl5y2k.streamlit.app/?embed=true&refresh=20261010" width="100%" height="800" style="border: none;" allow="clipboard-write"> </iframe>
 

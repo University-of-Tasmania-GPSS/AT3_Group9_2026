@@ -69,7 +69,7 @@ A photograph of Sydney police car Photograph: Dan Himbrechts/AAPsome
 
 #### Research Question 
 
-How does the spatial distribution of crime (drug offences, violent crime and property offences) vary across NSW LGAs, and to what extent is crime rate associated with unemployment, income and high-school completion? 
+How does the spatial distribution of crime (drug offences, violent crime and property offences) vary across Greater Sydney's Local Government Areas (LGAs), and to what extent is crime rate associated with unemployment, income and high-school completion? 
 
 #### What Will This Project Investigate?
 
