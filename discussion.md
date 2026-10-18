@@ -42,13 +42,13 @@ A report by Don Weatherburn for the NSW Bureau of Crime Statistics and Research 
 
 
 ## Time Correlation
-As discussed previously 
+Plotting crime rates over time for each LGA allowed for the calculation of if there was a statistically significant relationship between crime rates and time. LGAs across a range of crime types have a statistically significant relationship with time and from that we used least squares to predict a gradient for this change over time. Primarily this change over time was used to see if the crime rate was increasing or decreasing in that LGA over time. 
 
+Violent crime had a statistically significant increasing trend across almost all of the LGAs with 26 out of 30 LGAs having statistically significant positive correlation over time (on average a strong positive correlation). A report by the Australian government suggests however that this noted increase in violent crime not as a result of increasing rates of crimes such as homicide but instead is a result of increase reporting of crime such as assault and sexual assault. Whilst surveys of the Australian population suggest that rates of assault and sexual assault as not really changing, the rate of them being reported to police is (Bricknell, 2008). A notable contributor to the reported increase in violent crime is domestic violence which according to the Australian Bureau of Statistics increased 8% across 2024 to 2025 (Australian Bureau of Statistics, 2026). Whilst it may appear in our data that violent crime is increasing in almost every LGA in Greater Sydney, this trend is more likely to be a result in increased reporting of certain violent crimes. The data used in this project represents crime reported to police or recorded by police meaning that it likely does not represent the true levels of certain crime types. 
 
-Drug offences: usually not signifigant
-Violent Crime: On average a strong positive correlation, 26 out of 30 LGAs had statistically signifigant positive correlation over time which means it can be said that in those 26 LGAs violent crime has been increasing over time. 
-Property Offences: On average a strong negative correlation, 24 out of 30 LGAs had statistically signifigant negative correlation over time which means it can be said that in those 24 LGAs property offences have been decreasing over time. 
+Property Offences had a statistically significant decreasing trend across, 24 out of 30 LGAs had statistically significant negative correlation over time which means it can be said that in those 24 LGAs properties offences have been decreasing over time. This decrease in property offences is consistent across the country with property offences decreasing across the country since the COVID-19 pandemic (Australian Bureau of Statistics, 2026). 
 
+Drug offences had a much more random distribution of trends over time with most LGA’s proving to not have statistically significant changes in drug offences over time. 
 
 % Leave at the bottom 
 <div style="border-top: 1px solid #cccccc; margin-top: 35px; padding-top: 12px; font-size: 0.9em; color: #666;">

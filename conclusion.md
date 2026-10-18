@@ -1,37 +1,8 @@
-# Conclusion
-
-
-
+# Conclusion/Possible Further Exploration
+The analysis procress completed in this project is extemely repeatable and can not only be reused for different areas but even for different sized areas (say suburbs instead of LGAs). Our analysis aligned heavily with existing research about crime rates and as such this proves that this analysis provided meaningful insight into crime rates across greater Sydney. This project worked with publicly available data, deeper analysis be able to occur if we had access to data relating offenders to where they live and what their specific socioeconomic circumstances are. Further hot spot analysis could occur if we had addresses of where crimes occured. Overall this project produced a very replicable workflow which produces results which can be used to discuss crime rates throughout an area, however the data used means that often we are tracking reporting rates rather than actual crime rates. 
 
 
 % Leave at the bottom
 <div style="border-top: 1px solid #cccccc; margin-top: 35px; padding-top: 12px; font-size: 0.9em; color: #666;">
   GIS Project | Greater Sydney, New South Wales | 2015–2025 | M. Marshall & T. Powell
 </div>
-
-
-
-I am a book about ... something! Wikipedia has [information about books](wiki:book): hover over the link for more information.
-
-% An admonition containing a note
-:::{note}
-Books are usually written on paper ... But Jupyter Book can create _websites_!
-:::
-
-If you sold 100 books at \$10 per book, you'd have \$1000 dollars according to [](#eq:book). If instead you publish your Jupyter Book to the web for free, you'd have \$0 dollars!
-
-% An arbitrary math equation
-:::{math}
-:name: eq:book
-
-x \times y = z
-:::
-
-Sometimes when reading it is helpful to foster a _tranquil_ environment. The image in [](#fig:mountains) would be a perfect spot!
-
-% A figure of a photograph of some mountains, followed by a caption
-:::{figure} https://github.com/rowanc1/pics/blob/main/mountains.png?raw=true
-:label: fig:mountains
-
-A photograph of some beautiful mountains to look at whilst reading.
-:::
