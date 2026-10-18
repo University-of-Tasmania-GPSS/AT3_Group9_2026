@@ -103,7 +103,10 @@ Overall spatial concentration of crime rates across the whole study area (30 LGA
 
 
 # Socio Economic Correlation Results 
-Note: Some scatter plots in this section have a line of best fit. This is to highlight the direction of correlation.
+
+:::{note} Note:
+Some scatter plots in this section have a line of best fit. This is to highlight the direction of correlation.
+:::
 
 ### Graph 1: Example Data with Sydney LGA
 :::{figure} HighvsPO(SYD).png
@@ -184,9 +187,26 @@ This graph displays a relationship with moderate correlation (r = 0.40). This da
 | Unemployment (%) | 0.54 | 0.44 | 0.40 |
 | Year 12 Completion (%) | -0.74 | -0.41 | Not Statistically Significant |
 
+<div style="
+    background-color: #e8f0ec;
+    border-left: 5px solid #183D32;
+    padding: 18px 22px;
+    border-radius: 8px;
+    margin: 10px 0 40px;
+">
+
+Table 1 and Table 2 display the Pearson's r values for the 18 different relationships analysised. Removing the Sydney LGA from the datasets increased the correlation coefficient for every relationship (bar year 12 completion and drug offences which did not have a statistically signifigant correlation). In the datasets without Sydney:
+- As Median Weekly Income increased, all three crime types decreased. 
+- As Unemployment increased, all three crime types increased.
+- As Year 12 completion increase, Violent crime and Property Offences decreased. 
+
+</div>
 
 
 # Time Correlation Results
+:::{note} Note:
+The scatter plots in this section have a line of best fit if the relationship was statistically signifigant, this is the line that was used to calculated the gradient over time (average change in crime rate over time).
+:::
 
 ````{dropdown} Table 3: Crime Rate and Time Correlation (with Gradients)
 
@@ -229,16 +249,50 @@ This graph displays a relationship with moderate correlation (r = 0.40). This da
 :::{figure} paramatta.png
 :::
 
+<div style="
+    background-color: #e8f0ec;
+    border-left: 5px solid #183D32;
+    padding: 18px 22px;
+    border-radius: 8px;
+    margin: 10px 0 40px;
+">
+
+This graph is an example of an LGA which has a crime type that is positively correlated over time. Paramatta's violent crime rates have a correlation coefficient of 0.97 with time which suggests an extremely strong correlation. It can be said that violent crime is increasing over time in Parramatta. 
+
+</div>
 
 
 ### Graph 5: Example Data of Strong Negative Correlation (Decrease over Time)
 :::{figure} NorthernBeaches.png
 :::
 
+<div style="
+    background-color: #e8f0ec;
+    border-left: 5px solid #183D32;
+    padding: 18px 22px;
+    border-radius: 8px;
+    margin: 10px 0 40px;
+">
+
+This graph is an example of an LGA which has a crime type that is negatively correlated over time. Northern Beaches property offence rates have a correlation coefficient of -0.93 with time which suggests an extremely strong correlation. It can be said that property offences are decreasing over time in the Northern Beaches. 
+
+</div>
 
 ### Graph 6: Example Data of No Correlation:
 :::{figure} Will.png
 :::
+
+<div style="
+    background-color: #e8f0ec;
+    border-left: 5px solid #183D32;
+    padding: 18px 22px;
+    border-radius: 8px;
+    margin: 10px 0 40px;
+">
+
+This graph is an example of an LGA which has a crime type that is not correlated over time. Willoughby's drug offence rates are not correlated over time and it cannot be said that they are increasing or decreasing over time. 
+
+</div>
 
 
 
