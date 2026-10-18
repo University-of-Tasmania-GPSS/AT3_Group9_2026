@@ -55,6 +55,8 @@ Weatherburn, D. (1992). Economic Adversity and Crime* (Trends & Issues in Crime 
 
 Weatherburn, D. (2001). *Contemporary issues in crime and justice number 54 what causes crime?*
 
+A weird issue is occuring in the footer here. It is something weird to do with the Myst build cache which we could not fix. 
+
 <div style="border-top: 1px solid #cccccc; margin-top: 35px; padding-top: 12px; font-size: 0.9em; color: #666;">
   GIS Project | Greater Sydney, New South Wales | 2015–2025 | M. Marshall & T. Powell
 </div>
